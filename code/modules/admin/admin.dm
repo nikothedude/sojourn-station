@@ -1,6 +1,7 @@
 
 var/global/BSACooldown = 0
 var/global/floorIsLava = 0
+var/global/VV_int = 0
 #define NO_ANTAG 0
 #define LIMITED_ANTAG 1
 #define ANTAG 2
@@ -12,6 +13,9 @@ var/global/floorIsLava = 0
 #define ADMIN_TP_DISPLAY(user,display) "<a href='?_src_=holder;traitor=\ref[user]'>[display]</a>"
 
 ////////////////////////////////
+/proc/show_VV(atom, display)
+	message_admins("<a href='?_src_=vars;Vars=\ref[atom]'>[display]</a>")
+
 /proc/message_admins(var/msg, tag = "admin_log", tagtext = "ADMIN LOG")
 	lobby_message(message = msg, color = "#FFA500")
 	var/m = "<span class=\"log_message\"><span class=\"prefix\">[tagtext]:</span> <span class=\"message\">[msg]</span></span>"

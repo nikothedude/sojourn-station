@@ -5,6 +5,9 @@
 	//Temperature in Kelvin of this gas mix.
 	var/temperature = 0
 
+	/// What networks, if any, does this gas belong to. This is only a list because im scared.
+	var/list/networks = list()
+
 	//Sum of all the gas moles in this mix.  Updated by update_values()
 	var/total_moles = 0
 	//Volume of this mix.
@@ -21,6 +24,12 @@
 /datum/gas_mixture/Destroy()
 	gas = null
 	graphic = null
+
+	if (networks.len != 0)
+		for (var/datum/pipe_network/network in networks)
+			network.gases -= src
+			networks -= network
+
 	return ..()
 
 /datum/gas_mixture/proc/get_total_moles()

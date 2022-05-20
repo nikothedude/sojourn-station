@@ -25,9 +25,15 @@ datum/pipe_network
 		for(var/datum/pipeline/line_member in line_members)
 			line_member.network = null
 
-		gases.Cut()
-		normal_members.Cut()
-		line_members.Cut()
+		for(var/datum/gas_mixture/gas_in_network in gases)
+			gas_in_network.networks -= src
+
+		if (gases.len != 0)
+			gases.Cut()
+		if (normal_members.len != 0)
+			normal_members.Cut()
+		if (line_members.len != 0)
+			line_members.Cut()
 
 		. = ..()
 
@@ -82,9 +88,13 @@ datum/pipe_network
 
 		for(var/obj/machinery/atmospherics/normal_member in normal_members)
 			var/result = normal_member.return_network_air(src)
-			if(result) gases += result
+			if(result)
+				for (var/datum/gas_mixture/gas in result)
+					gas.networks += src
+				gases += result
 
 		for(var/datum/pipeline/line_member in line_members)
+			line_member.air.networks += src
 			gases += line_member.air
 
 		for(var/datum/gas_mixture/air in gases)

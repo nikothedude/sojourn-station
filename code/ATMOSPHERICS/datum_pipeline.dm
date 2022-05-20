@@ -14,6 +14,9 @@ datum/pipeline
 		air = new
 
 	Destroy()
+
+		if(network)
+			network.line_members -= src
 		QDEL_NULL(network)
 
 		//Update individual gas_mixtures by volume ratio
@@ -69,24 +72,34 @@ datum/pipeline
 					for(var/obj/machinery/atmospherics/pipe/item in result)
 						if(!members.Find(item))
 							if(!((QDELETED(item) || (QDESTROYING(item)))))
-								members += item
-								possible_expansions += item
+								if (!item.parent) //is this pipe already part of a pipeline? if so, dont add it
+									members += item
+									possible_expansions += item
 
-								volume += item.volume
-								item.parent = src
+									volume += item.volume
+									item.parent = src
 
-								alert_pressure = min(alert_pressure, item.alert_pressure)
+									alert_pressure = min(alert_pressure, item.alert_pressure)
 
-								if(item.air_temporary)
-									air.merge(item.air_temporary)
-									qdel(item.air_temporary)
-									item.air_temporary = null
+									if(item.air_temporary)
+										air.merge(item.air_temporary)
+										qdel(item.air_temporary)
+										item.air_temporary = null
+								else
+									log_world("[item] tried to connect to [src] but was already part of the [item.parent] pipeline ")
+									message_admins("[item] tried to connect to [src] but was already part of the [item.parent] pipeline")
+									show_VV(item, "VV [VV_int]")
+									show_VV(src, "VV [VV_int]")
+									show_VV(item.parent, "VV [VV_int]")
+									VV_int++
+
 
 						edge_check--
 
 				if(edge_check>0)
 					if(!((QDELETED(borderline) || (QDESTROYING(borderline)))))
-						edges += borderline
+						if (!(borderline.parent) || borderline.parent == src)
+							edges += borderline
 
 				possible_expansions -= borderline
 
