@@ -46,6 +46,7 @@ datum/pipeline
 					break //Only delete 1 pipe per process
 
 	proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
+		var/list/datum/pipeline/mergeable_pipelines = list()
 		var/list/possible_expansions = list(base)
 		members = list(base)
 		edges = list()
@@ -69,18 +70,21 @@ datum/pipeline
 					for(var/obj/machinery/atmospherics/pipe/item in result)
 						if(!members.Find(item))
 							if(!((QDELETED(item) || (QDESTROYING(item)))))
-								members += item
-								possible_expansions += item
+								if (item.parent && item.parent != src)
+									members += item
+									possible_expansions += item
 
-								volume += item.volume
-								item.parent = src
+									volume += item.volume
+									item.parent = src
 
-								alert_pressure = min(alert_pressure, item.alert_pressure)
+									alert_pressure = min(alert_pressure, item.alert_pressure)
 
-								if(item.air_temporary)
-									air.merge(item.air_temporary)
-									qdel(item.air_temporary)
-									item.air_temporary = null
+									if(item.air_temporary)
+										air.merge(item.air_temporary)
+										qdel(item.air_temporary)
+										item.air_temporary = null
+								else if (!QDELETED(item.parent) && !mergeable_pipelines.Find(item.parent))
+									mergeable_pipelines += item.parent
 
 						edge_check--
 
