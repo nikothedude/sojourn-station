@@ -31,11 +31,13 @@ Pipelines + Other Objects -> Pipe network
 	var/initialize_directions = 0
 	var/pipe_color
 
+	var/atmos_initialized = FALSE
+
 	var/global/datum/pipe_icon_manager/icon_manager
 	var/obj/machinery/atmospherics/node1
 	var/obj/machinery/atmospherics/node2
 
-/obj/machinery/atmospherics/New()
+/obj/machinery/atmospherics/Initialize()
 	if(!icon_manager)
 		icon_manager = new()
 
@@ -53,7 +55,7 @@ Pipelines + Other Objects -> Pipe network
 	..()
 
 /obj/machinery/atmospherics/proc/atmos_init()
-	return
+	atmos_initialized = TRUE
 
 /obj/machinery/atmospherics/attackby(atom/A, mob/user as mob)
 	if(istype(A, /obj/item/device/pipe_painter))
@@ -77,6 +79,9 @@ Pipelines + Other Objects -> Pipe network
 		return 1
 	else
 		return 0
+
+/obj/machinery/atmospherics/on_update_icon()
+	return null
 
 obj/machinery/atmospherics/proc/check_connect_types(obj/machinery/atmospherics/atmos1, obj/machinery/atmospherics/atmos2)
 	return (atmos1.connect_types & atmos2.connect_types)

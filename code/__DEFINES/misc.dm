@@ -384,6 +384,8 @@
 #define INVISIBILITY_NONE                 0
 #define INVISIBILITY_WEAK                 25
 
+#define list_find(L, needle, LIMITS...) L.Find(needle, LIMITS)
+
 // Macro defining the actual code applying our overlays lists to the BYOND over-lays list. (I guess a macro for speed)
 // TODO - I don't really like the location of this macro define.  Consider it. ~Leshana
 #define COMPILE_OVERLAYS(A)\

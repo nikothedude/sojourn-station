@@ -54,6 +54,9 @@
 	var/stat = 0
 
 /atom/proc/update_icon()
+	on_update_icon(arglist(args))
+
+/atom/proc/on_update_icon()
 	return
 
 /atom/proc/healthCheck()
@@ -766,6 +769,9 @@ its easier to just keep the beam vertical.
 
 /atom/proc/get_cell()
 	return
+
+/atom/proc/get_color()
+	return isnull(color) ? COLOR_WHITE : color
 
 /atom/proc/get_coords()
 	var/turf/T = get_turf(src)
