@@ -28,6 +28,16 @@
 	if(amount > 1)
 		update_icon()
 
+/obj/item/ammo_casing/Destroy()
+
+	BB = null
+
+	if (istype(loc, /obj/item/ammo_magazine))
+		var/obj/item/ammo_magazine/magazine = loc
+			magazine.stored_ammo -= src
+
+	. = ..()
+
 //removes the projectile from the ammo casing
 /obj/item/ammo_casing/proc/expend()
 	. = BB
@@ -200,6 +210,12 @@
 		for(var/i in 1 to initial_ammo)
 			stored_ammo += new ammo_type(src)
 	update_icon()
+
+/obj/item/ammo_magazine/Destroy()
+
+	QDEL_NULL(stored_ammo)
+
+	. = ..()
 
 /obj/item/ammo_magazine/attackby(obj/item/W as obj, mob/user as mob)
 	if(istype(W, /obj/item/ammo_casing))
