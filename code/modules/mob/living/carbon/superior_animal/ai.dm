@@ -6,8 +6,7 @@
 
 //Use this for all mobs per zlevel, get_dist() checked
 /mob/living/carbon/superior_animal/proc/getPotentialTargets()
-	var/turf/T = get_turf(src)
-	if(!T)
+	if (!(isturf(loc)))
 		return //We're contained inside something, a locker perhaps.
 	return hearers(src, viewRange)
 

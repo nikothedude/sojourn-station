@@ -127,7 +127,9 @@
 #define GLUT_SMALLER 2    // Eat anything smaller than we are
 #define GLUT_ANYTHING 3   // Eat anything, ever
 
+// Targetting defines.
 
+#define SUPERIOR_MOB_TARGET_COOLDOWN 30 SECONDS // TODO: Maybe break this up into multiple levels of cooldown?
 
 // Flags for mob types by Nanako. Primarily used for distinguishing organic from synthetic mobs
 #define CLASSIFICATION_ORGANIC      1	// Almost any creature under /mob/living/carbon and most simple animals

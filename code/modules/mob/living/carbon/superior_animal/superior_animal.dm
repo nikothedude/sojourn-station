@@ -15,6 +15,9 @@
 
 	var/eating_time = 900
 
+	/// Used for deciding whether or not we should check for targets in the event no living sentient mob is near us.
+	var/nexttargetcheck = 0
+
 	var/moved = FALSE
 	var/move_attack_mult = 0.6
 	universal_understand = TRUE //QoL to admins controling mobs
@@ -323,8 +326,24 @@
 		if(HOSTILE_STANCE_IDLE)
 			if (!busy) // if not busy with a special task
 				stop_automated_movement = FALSE
-			target_mob = WEAKREF(findTarget())
-			targetted_mob = (target_mob?.resolve())
+				var/current_time = world.time
+				var/sapient_in_range = FALSE
+		//	if (!()) //TODO: check for sapient things within 3*targetting range here
+			for (var/mob/living/carbon/human/potentially_sapient_target in range(viewRange)) //likely unoptimized - fix
+				if (!((is_dead(potentially_sapient_target)) || potentially_sapient_target.client))
+					continue
+				else
+					sapient_in_range = TRUE
+					break
+				if (!(sapient_in_range))
+					if (current_time > nexttargetcheck)
+						nexttargetcheck = current_time + SUPERIOR_MOB_TARGET_COOLDOWN
+					else
+						break
+
+				target_mob = WEAKREF(findTarget())
+				targetted_mob = (target_mob?.resolve())
+
 			if (targetted_mob)
 				stance = HOSTILE_STANCE_ATTACK
 
