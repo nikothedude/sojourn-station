@@ -117,7 +117,12 @@
 	triggered = 1
 	playsound(src.loc, 'sound/sanity/screech.ogg', 300, 1)
 	M.Weaken(3)
-	new /mob/living/carbon/superior_animal/giant_spider/tarantula/emperor(src.loc)
+	var/mob/living/carbon/superior_animal/temp_ref
+	temp_ref = new /mob/living/carbon/superior_animal/giant_spider/tarantula/emperor(src.loc)
+	temp_ref.Paralyse(5) //dont attack them instantly please
+	temp_ref.target_mob = WEAKREF(M)
+	temp_ref.stance = HOSTILE_STANCE_ATTACK
+	temp_ref = null
 	qdel(src)
 
 /obj/item/spider_shadow_trap/burrowing
@@ -142,7 +147,12 @@
 	triggered = 1
 	playsound(src.loc, 'sound/effects/impacts/rumble2.ogg', 300, 1)
 	M.Weaken(3)
-	new /mob/living/carbon/superior_animal/giant_spider/tarantula/burrowing(src.loc)
+	var/mob/living/carbon/superior_animal/temp_ref
+	temp_ref = new /mob/living/carbon/superior_animal/giant_spider/tarantula/burrowing(src.loc)
+	temp_ref.Paralyse(5) //dont attack them instantly please
+	temp_ref.target_mob = M
+	temp_ref.stance = HOSTILE_STANCE_ATTACK
+	temp_ref = null
 	qdel(src)
 
 /obj/item/spider_shadow_trap/burrowing/New()
