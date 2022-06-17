@@ -388,24 +388,26 @@
 		weakened = max(weakened-3,0)
 		cheap_update_lying_buckled_and_verb_status_()
 		var/datum/gas_mixture/breath = environment.remove_volume(BREATH_VOLUME)
-		handle_cheap_breath(breath)
+		if (!is_dead())
+			handle_cheap_breath(breath) //they probably stop breathing once dead
 		handle_cheap_environment(environment)
 		updateicon()
 		ticks_processed = 0
-	if(handle_cheap_regular_status_updates()) // They have died after all of this, do not scan or do not handle AI anymore.
-		return PROCESS_KILL
+	handle_cheap_regular_status_updates() //ironically we want dead mobs to process
 
-	if (can_burrow && bad_environment)
-		evacuate()
+	if (!is_dead()) //all this only matters for alive mobs
 
-	if (!weakened)
+		if (!weakened)
 
-		if(!AI_inactive) //we dont need to handle ai if we're disabled
-			handle_ai()
-			//Speaking
+			if (can_burrow && bad_environment)
+				evacuate()
 
-			if(speak_chance && prob(speak_chance))
-				visible_emote(emote_see)
+			if(!AI_inactive) //we dont need to handle ai if we're disabled
+				handle_ai()
+				//Speaking
+
+				if(speak_chance && prob(speak_chance))
+					visible_emote(emote_see)
 
 			if (following)
 				if (!target_mob) // Are we following someone and not attacking something?
@@ -414,21 +416,21 @@
 				walk_to(src, 0)
 				last_followed = null // this exists so we only stop the following once, no need to constantly end our walk
 
-	if(life_cycles_before_sleep)
-		life_cycles_before_sleep--
-		return TRUE
-	if(!(AI_inactive && life_cycles_before_sleep))
-		AI_inactive = TRUE
+		if(life_cycles_before_sleep)
+			life_cycles_before_sleep--
+			return TRUE
+		if(!(AI_inactive && life_cycles_before_sleep))
+			AI_inactive = TRUE
 
-	if(life_cycles_before_scan)
-		life_cycles_before_scan--
+		if(life_cycles_before_scan)
+			life_cycles_before_scan--
+			return FALSE
+		if(check_surrounding_area(viewRange))
+			activate_ai()
+			life_cycles_before_scan = initial(life_cycles_before_scan)/6 //So it doesn't fall asleep just to wake up the next tick
+			return TRUE
+		life_cycles_before_scan = initial(life_cycles_before_scan)
 		return FALSE
-	if(check_surrounding_area(viewRange))
-		activate_ai()
-		life_cycles_before_scan = initial(life_cycles_before_scan)/6 //So it doesn't fall asleep just to wake up the next tick
-		return TRUE
-	life_cycles_before_scan = initial(life_cycles_before_scan)
-	return FALSE
 
 /**
  *  To be used when, instead of raw attack procs, you want to add a timer.
