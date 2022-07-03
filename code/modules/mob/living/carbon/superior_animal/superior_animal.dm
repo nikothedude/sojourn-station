@@ -297,21 +297,9 @@
 				fire_through_lost_sight = TRUE
 		// This block only runs if the above can_see check is true, fires a trace projectile to see if we can hit our target
 		else if (projectiletype && advance) // if we can see, let's prepare to see if we can hit
-			if (istype(projectiletype, /obj/item/projectile))
-				if (projectiletype == initial(projectiletype)) // typepaths' vars are only accessable through initial() or objects
-					projectile_passflags = initial(projectiletype.pass_flags)
-					projectile_flags = initial(projectiletype.flags)
-					projectile_penetration = initial(projectiletype.penetrating)
-					projectile_damage = initial(projectiletype.damage_types)
-				else // in case for some reason this var was editted post-compile
-					var/obj/item/projectile/temp_proj = new projectiletype(null) //create it in nullspace
-					projectile_passflags = temp_proj.pass_flags
-					projectile_flags = temp_proj.flags
-					projectile_penetration = temp_proj.penetrating
-					projectile_damage = initial(temp_proj.damage_types)
-					QDEL_NULL(temp_proj)
+			var/obj/item/projectile/temp_proj = new projectiletype(null) //create it in nullspace
 			if (ranged)
-				check_trajectory_raytrace(targetted_mob, src, projectile_passflags, projectile_flags, projectile_penetration, projectile_damage, .proc/handle_trace_impact)
+				check_trajectory_raytrace(targetted_mob, src, temp_proj, .proc/handle_trace_impact)
 
 	if (!fire_through_lost_sight) //can only be true if src does not have fire_through_walls
 		lost_sight = FALSE
@@ -512,7 +500,7 @@
  * trace: obj/item/projectile/test/impacttest. The trace we are registered to.
  * atom/impact_atom: The atom the trace impacted.
 **/
-/mob/living/carbon/superior_animal/handle_trace_impact(var/obj/item/projectile/test/impacttest/trace, var/atom/impact_atom)
+/mob/living/carbon/superior_animal/handle_trace_impact(var/obj/item/projectile/test/impacttest/trace, var/atom/impact_atom, var/false = FALSE)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(trace, COMSIG_TRACE_IMPACT)

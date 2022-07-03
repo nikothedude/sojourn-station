@@ -957,11 +957,11 @@
 
 		var/mob/living/M = locate() in get_turf(src)
 		if(istype(M)) //If there is someting living...
-			return 1 //Return 1
+			return TRUE //Return 1
 		else
 			M = locate() in get_step(src,targloc)
 			if(istype(M))
-				return 1
+				return TRUE
 
 //Helper proc to check if you can hit them or not.
 /proc/check_trajectory(atom/target as mob|obj, atom/firer as mob|obj, var/pass_flags=PASSTABLE|PASSGLASS|PASSGRILLE, flags=null)
