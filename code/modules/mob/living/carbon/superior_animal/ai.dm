@@ -21,6 +21,8 @@
 
 /mob/living/carbon/superior_animal/proc/findTarget(prioritizeCurrent = FALSE)
 
+	var/overridden = FALSE
+
 	if (prioritizeCurrent)
 		if (target_mob)
 			if (prob(retarget_chance))
@@ -33,15 +35,20 @@
 		for(var/mob/living/target_mob in hearers(src, viewRange))
 			if (isValidAttackTarget(target_mob))
 				if(target_mob.target_dummy && prioritize_dummies) //Target me over anyone else
-					return target_mob
-				filteredTargets += target_mob
+					filteredTargets.Cut()
+					filteredTargets += target_mob
+					overridden = TRUE
+					break
+				else
+					filteredTargets += target_mob
 
-		for (var/obj/mecha/M in GLOB.mechas_list)
-			//As goofy as this looks its more optimized as were not looking at every mech outside are z-level if they are around us. - Trilby
-			if(M.z == z)
-				if(get_dist(src, M) <= viewRange)
-					if(isValidAttackTarget(M))
-						filteredTargets += M
+		if (!(overridden))
+			for (var/obj/mecha/M in GLOB.mechas_list)
+				//As goofy as this looks its more optimized as were not looking at every mech outside are z-level if they are around us. - Trilby
+				if(M.z == z)
+					if(get_dist(src, M) <= viewRange)
+						if(isValidAttackTarget(M))
+							filteredTargets += M
 
 	var/atom/filteredTarget = safepick(getTargets(filteredTargets, src))
 

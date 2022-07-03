@@ -238,6 +238,8 @@
 /mob/living/carbon/superior_animal/proc/handle_attacking_stance(var/atom/targetted_mob, var/already_destroying_surroundings = FALSE)
 	var/projectile_passflags = null
 	var/projectile_flags = null
+	var/projectile_penetration = 0
+	var/list/projectile_damage = null
 	var/calculated_walk = (comfy_range - comfy_distance)
 	var/fire_through_lost_sight = FALSE
 	var/target_location_resolved = (target_location?.resolve())
@@ -299,17 +301,17 @@
 				if (projectiletype == initial(projectiletype)) // typepaths' vars are only accessable through initial() or objects
 					projectile_passflags = initial(projectiletype.pass_flags)
 					projectile_flags = initial(projectiletype.flags)
+					projectile_penetration = initial(projectiletype.penetrating)
+					projectile_damage = initial(projectiletype.damage_types)
 				else // in case for some reason this var was editted post-compile
 					var/obj/item/projectile/temp_proj = new projectiletype(null) //create it in nullspace
 					projectile_passflags = temp_proj.pass_flags
 					projectile_flags = temp_proj.flags
+					projectile_penetration = temp_proj.penetrating
+					projectile_damage = initial(temp_proj.damage_types)
 					QDEL_NULL(temp_proj)
 			if (ranged)
-				var/obj/item/projectile/test/impacttest/trace = new /obj/item/projectile/test/impacttest(get_turf(src))
-				RegisterSignal(trace, COMSIG_TRACE_IMPACT, .proc/handle_trace_impact)
-				trace.pass_flags = projectile_passflags
-				trace.flags = projectile_flags
-				trace.launch(targetted_mob)
+				check_trajectory_raytrace(targetted_mob, src, projectile_passflags, projectile_flags, projectile_penetration, projectile_damage, .proc/handle_trace_impact)
 
 	if (!fire_through_lost_sight) //can only be true if src does not have fire_through_walls
 		lost_sight = FALSE
@@ -510,7 +512,7 @@
  * trace: obj/item/projectile/test/impacttest. The trace we are registered to.
  * atom/impact_atom: The atom the trace impacted.
 **/
-/mob/living/carbon/superior_animal/proc/handle_trace_impact(var/obj/item/projectile/test/impacttest/trace, var/atom/impact_atom)
+/mob/living/carbon/superior_animal/handle_trace_impact(var/obj/item/projectile/test/impacttest/trace, var/atom/impact_atom)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(trace, COMSIG_TRACE_IMPACT)
