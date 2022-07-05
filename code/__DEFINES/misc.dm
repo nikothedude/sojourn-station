@@ -6,6 +6,12 @@
 #define TRANSITIONEDGE 7 // Distance from edge to move to another z-level.
 #define RUIN_MAP_EDGE_PAD 15
 
+#define ON_SOURCE 0
+#define ON_TARGET 1
+
+#define RADIUS_SEARCH 2
+#define OFFSET_SEARCH 3
+
 // Invisibility constants.
 #define INVISIBILITY_LIGHTING             20
 #define INVISIBILITY_ANGEL                30

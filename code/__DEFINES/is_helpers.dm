@@ -42,6 +42,8 @@
 
 #define ismouse(A) istype(A, /mob/living/simple_animal/mouse)
 
+#define ishostilesimpleanimal(A) istype(A, /mob/living/simple_animal/hostile)
+
 #define issuperioranimal(A) istype(A, /mob/living/carbon/superior_animal)
 
 #define issuperiorhuman(A) istype(A, /mob/living/carbon/superior_animal/human)
