@@ -35,33 +35,88 @@
 	friends.Cut()
 	. = ..()
 
-/mob/living/carbon/superior_animal/proc/cover_check(var/atom/movable/enemy)
-	if (do_ranged_threat_check(enemy))
+/proc/cover_check(var/atom/movable/enemy, var/atom/movable/source, radius = 0, target_mode = ON_SOURCE, offset = 0, count = 0, search_mode = RADIUS_SEARCH, var/proc_path = null)
+	var/list/obj/item/projectile/projectiles = do_ranged_threat_check(enemy, source, TRUE)
+	if (projectiles == FALSE || (projectiles.len == 0))
+		return FALSE
+	else
+		var/list/atom/to_check = list()
+		var/radiusvar
+		var/sourcevar
+		switch (target_mode)
+			if (ON_SOURCE)
+				sourcevar = source
+			if (ON_TARGET)
+				sourcevar = enemy
+		switch(search_mode)
+			if (RADIUS_SEARCH)
+				radiusvar = radius
+			if (OFFSET_SEARCH)
+				radiusvar = offset
 
-/mob/living/carbon/superior_animal/proc/do_ranged_threat_check(var/atom/movable/enemy)
+		if (search_mode == RADIUS_SEARCH)
+			to_check = RANGE_TURFS(radiusvar, sourcevar)
+		else if (search_mode == OFFSET_SEARCH)
+			to_check = sourcevar
+
+		for (var/obj/item/projectile/to_simulate in projectiles)
+			check_trajectory_raytrace()
+
+/proc/do_ranged_threat_check(var/atom/movable/enemy, var/atom/movable/source, var/coverCheck = FALSE)
+	var/list/obj/item/projectile/proj = list()
 	if (ishuman(enemy))
 		var/mob/living/carbon/human/humanenemy = enemy
-		var/list/hands = list(l_hand, r_hand)
+		var/list/hands = list(humanenemy.l_hand, humanenemy.r_hand)
 		var/passflags = null
 		var/flags = null
-		var/list/obj/item/projectile/proj
 		for (var/obj/item/gun/firearm in hands) //todo make all possible ranged attacks be part of this, consider psionics
 			if (istype(firearm, /obj/item/gun/energy))
 				var/obj/item/gun/energy/energygun = firearm
-				proj += energygun.projectile_type
+				if (!(energygun.projectile_type in proj))
+					proj += energygun.projectile_type
 			else if (istype(firearm, /obj/item/gun/projectile))
 				var/obj/item/gun/projectile/projgun = firearm
 				if (!(projgun.chambered))
 					if (projgun.loaded.len)
-						proj += pick(projgun.loaded)
+						var/obj/item/projectile/bullet = pick(projgun.loaded)
+						if (!(bullet in proj))
+							proj += bullet
 					else if (projgun.caliber)
-						proj += projgun.caliber
-		var/length = (proj.len)
-		if (proj.len)
-			if (proj.len > 1)
-				for (var/obj/item/projectile/projectile_var in proj)
-					passflags += projectile_var.pass_flags
-					flags += projectile_var.pass_flags
+						if (!(projgun.caliber in proj))
+							proj += projgun.caliber
+				else
+					if (!(projgun.chambered in proj))
+						proj += chambered
+
+	else if (issuperioranimal(enemy))
+		var/mob/living/carbon/superior_animal/superiorenemy = enemy
+		if (superiorenemy.ranged && (!(superiorenemy.projectiletype in proj)))
+			proj += superiorenemy.projectiletype
+		else
+			return FALSE
+
+	else if (ishostilesimpleanimal(enemy))
+		var/mob/living/simple_animal/hostile/simpleenemy = enemy
+		if (simpleenemy.ranged && (!(simpleenemy.projectiletype in proj)))
+			proj += simpleenemy.projectiletype
+		else
+			return FALSE
+
+	else if (ismecha(enemy))
+		var/obj/mecha/mechenemy = enemy
+		for (var/obj/item/mecha_parts/mecha_equipment/ranged_weapon/gun in mechenemy.equipment)
+			if (!(gun.projectile in proj))
+				proj += gun.projectile
+
+	else
+		proj += /obj/item/projectile/beam // the most basic bitch projectile
+
+	var/length = (proj.len)
+	if (length)
+		if (cover_check)
+			return proj
+	else
+		return FALSE
 
 /mob/living/carbon/superior_animal/proc/run_for_cover()
 

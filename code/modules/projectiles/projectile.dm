@@ -1118,25 +1118,26 @@
 **/
 /proc/check_trajectory_raytrace(atom/movable/target, atom/movable/firer, var/proj, var/proc_path = null, store_penetration = FALSE)
 	if (proc_path)
-		var/obj/item/projectile/trace = new proj(get_turf(firer))
-		trace.testing = TRUE
-		trace.invisibility = INFINITY //nobody can see it
-		trace.yo = 0
-		trace.xo = 0 //just taken from the test proj maybe investigate why it does this later
-		trace.hitscan = TRUE
+		if ()
+			var/obj/item/projectile/trace = new proj(get_turf(firer))
+			trace.testing = TRUE
+			trace.invisibility = INFINITY //nobody can see it
+			trace.yo = 0
+			trace.xo = 0 //just taken from the test proj maybe investigate why it does this later
+			trace.hitscan = TRUE
 
-		trace.firer = firer
+			trace.firer = firer
 
-		if (store_penetration)
-			trace.penetration_holder.store_penetration = TRUE
+			if (store_penetration)
+				trace.penetration_holder.store_penetration = TRUE
 
-		. = trace.penetration_holder
+			. = trace.penetration_holder
 
-		firer.RegisterSignal(trace, COMSIG_TRACE_IMPACT, proc_path)
+			firer.RegisterSignal(trace, COMSIG_TRACE_IMPACT, proc_path)
 
-		trace.launch(target)
+			trace.launch(target)
 
-		return
+			return TRUE
 	else
 		return FALSE
 
