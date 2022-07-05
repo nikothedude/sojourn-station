@@ -9,7 +9,7 @@
 	icon_state = "wayfarer"
 	item_state = "wayfarer"
 	drawChargeMeter = FALSE
-	caliber = "10x24"
+	caliber = CAL_1024
 	origin_tech = list(TECH_COMBAT = 3, TECH_MATERIAL = 3)
 	max_shells = 8
 	ammo_type = /obj/item/ammo_magazine/c10x24

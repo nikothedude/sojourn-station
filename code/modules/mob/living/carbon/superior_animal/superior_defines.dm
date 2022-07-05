@@ -15,6 +15,9 @@
 
 	var/eating_time = 900
 
+	/// Does this mob run for cover when shot by default?
+	var/run_for_cover = TRUE
+
 	/// Do we randomly retarget?
 	var/retarget = TRUE
 	/// How many ticks we will wait before trying to retarget randomly. When it hits 0, we retarget and reset the timer to retarget_timer_initial.

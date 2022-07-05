@@ -299,7 +299,7 @@
 ///10mm caseless
 /obj/item/ammo_casing/c10x24
 	desc = "A 10x24mm caseless cartidge."
-	caliber = "10x24"
+	caliber = CAL_1024
 	icon_state = "caseless"
 	projectile_type = /obj/item/projectile/bullet/c10x24
 	is_caseless = TRUE
@@ -784,7 +784,7 @@
 	desc = "Wait a second, this is a bullet!"
 	icon = 'icons/obj/stack/items.dmi'
 	icon_state = "rods"
-	caliber = "rod" //not a define
+	caliber = CAL_ROD
 	projectile_type = /obj/item/projectile/bullet/reusable/rod_bolt
 	matter = list(MATERIAL_STEEL = 1)
 	maxamount = 1

@@ -279,7 +279,6 @@
 	icon_state = "lrifle_long"
 	mag_type = MAGAZINE
 	mag_well = MAG_WELL_STANMAG
-	caliber = "lrifle"
 	caliber = CAL_LRIFLE
 	matter = list(MATERIAL_STEEL = 5)
 	ammo_type = /obj/item/ammo_casing/light_rifle_257
@@ -326,7 +325,6 @@
 	icon_state = "lrifle_short"
 	mag_type = MAGAZINE
 	mag_well = MAG_WELL_STANMAG
-	caliber = "lrifle"
 	caliber = CAL_LRIFLE
 	matter = list(MATERIAL_STEEL = 5)
 	ammo_type = /obj/item/ammo_casing/light_rifle_257
@@ -366,7 +364,6 @@
 	mag_type = MAGAZINE
 	mag_well = MAG_WELL_STANMAG
 	w_class = ITEM_SIZE_NORMAL
-	caliber = "lrifle"
 	caliber = CAL_LRIFLE
 	matter = list(MATERIAL_STEEL = 12)
 	ammo_type = /obj/item/ammo_casing/light_rifle_257
@@ -405,7 +402,6 @@
 	icon_state = "rifle"
 	mag_type = MAGAZINE
 	mag_well = MAG_WELL_RIFLE
-	caliber = "rifle"
 	caliber = CAL_RIFLE
 	matter = list(MATERIAL_STEEL = 5)
 	ammo_type = /obj/item/ammo_casing/rifle_75
@@ -452,7 +448,6 @@
 	icon_state = "rifle_short"
 	mag_type = MAGAZINE
 	mag_well = MAG_WELL_RIFLE
-	caliber = "rifle"
 	caliber = CAL_RIFLE
 	matter = list(MATERIAL_STEEL = 5)
 	ammo_type = /obj/item/ammo_casing/rifle_75
@@ -492,7 +487,6 @@
 	w_class = ITEM_SIZE_NORMAL
 	mag_type = MAGAZINE
 	mag_well = MAG_WELL_RIFLE
-	caliber = "rifle"
 	caliber = CAL_RIFLE
 	matter = list(MATERIAL_STEEL = 12)
 	ammo_type = /obj/item/ammo_casing/rifle_75
@@ -710,7 +704,7 @@
 	icon_state = "10x24"
 	mag_type = MAGAZINE
 	mag_well = MAG_WELL_PULSE
-	caliber = "10x24"
+	caliber = CAL_1024
 	matter = list(MATERIAL_STEEL = 8, MATERIAL_PLASTIC = 1)
 	ammo_type = /obj/item/ammo_casing/c10x24
 	max_ammo = 99
@@ -727,7 +721,7 @@
 	mag_type = MAGAZINE
 	mag_well = MAG_WELL_RIFLE
 	matter = list(MATERIAL_STEEL = 8)
-	caliber = "10x24"
+	caliber = CAL_1024
 	ammo_type = /obj/item/ammo_casing/c10x24
 	max_ammo = 40
 	multiple_sprites = 1

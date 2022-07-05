@@ -19,7 +19,7 @@
 			list_to_return += thing
 	return list_to_return*/
 
-/mob/living/carbon/superior_animal/proc/findTarget(prioritizeCurrent = FALSE)
+/mob/living/carbon/superior_animal/proc/findTarget(prioritizeCurrent = FALSE, doCoverCheck = TRUE)
 
 	if (prioritizeCurrent)
 		if (target_mob)
@@ -50,6 +50,9 @@
 
 	if (filteredTarget)
 		target_location = WEAKREF(filteredTarget.loc)
+
+	if (!doCoverCheck)
+		cover_check(filteredTarget)
 
 	return filteredTarget
 

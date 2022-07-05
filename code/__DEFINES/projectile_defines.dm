@@ -1,22 +1,24 @@
 //Caliber Defines
-#define CAL_PISTOL "9mm"
-#define CAL_MAGNUM "10mm magnum"
-#define CAL_LRIFLE "6.5mm carbine"
-#define CAL_RIFLE "7.62mm rifle"
-#define CAL_HRIFLE "8.6mm heavy rifle"
-#define CAL_ANTIM "14.5mm Anti Material"
-#define CAL_BALL "17mm rolled shot"
-#define CAL_SHOTGUN "Shotgun Shell"
-#define CAL_50	"12mm heavy pistol"
-#define CAL_70 "19mm explosive"
-#define CAL_CAP "plastic cap"
-#define CAL_ROCKET "rocket propelled grenade"
-#define CAL_DART "chemical dart"
-#define CAL_SCI "laser casings"
-#define CAL_GRENADE "grenade"
-#define CAL_FLARE "flare shell"
-#define CAL_CROSSBOW "bolt"
-#define CAL_ARROW "arrow"
+#define CAL_PISTOL /obj/item/projectile/bullet/pistol_35
+#define CAL_MAGNUM /obj/item/projectile/bullet/magnum_40
+#define CAL_LRIFLE /obj/item/projectile/bullet/light_rifle_257
+#define CAL_RIFLE /obj/item/projectile/bullet/rifle_75
+#define CAL_HRIFLE /obj/item/projectile/bullet/heavy_rifle_408
+#define CAL_1024 /obj/item/projectile/bullet/c10x24
+#define CAL_ROD /obj/item/projectile/bullet/reusable/rod_bolt
+#define CAL_ANTIM /obj/item/projectile/bullet/antim
+#define CAL_BALL /obj/item/projectile/bullet/ball
+#define CAL_SHOTGUN /obj/item/projectile/bullet/shotgun
+#define CAL_50	/obj/item/projectile/bullet/kurtz_50
+#define CAL_70 /obj/item/projectile/bullet/gyro
+#define CAL_CAP /obj/item/projectile/bullet/cap
+#define CAL_ROCKET /obj/item/projectile/bullet/rocket
+#define CAL_DART /obj/item/projectile/bullet/chemdart
+#define CAL_SCI /obj/item/projectile/beam/weak
+#define CAL_GRENADE /obj/item/projectile/bullet/batonround
+#define CAL_FLARE /obj/item/projectile/bullet/flare/green
+#define CAL_CROSSBOW /obj/item/projectile/bullet/crossbow_bolt
+#define CAL_ARROW /obj/item/projectile/bullet/reusable/arrow
 
 //Gun loading types
 #define SINGLE_CASING 	1	//The gun only accepts ammo_casings. ammo_magazines should never have this as their mag_type.

@@ -7,7 +7,7 @@
 	item_state = "scaffold"
 	w_class = ITEM_SIZE_NORMAL
 	force = WEAPON_FORCE_PAINFUL
-	caliber = "10x24"
+	caliber = CAL_1024
 	origin_tech = list(TECH_COMBAT = 12, TECH_MATERIAL = 10)
 	slot_flags = SLOT_BELT|SLOT_BACK
 	load_method = SINGLE_CASING|MAGAZINE

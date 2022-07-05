@@ -8,7 +8,7 @@
 	silenced = TRUE
 	w_class = ITEM_SIZE_BULKY
 	slot_flags = SLOT_BACK|SLOT_BELT
-	caliber = "10x24"
+	caliber = CAL_1024
 	ammo_type =  /obj/item/ammo_casing/c10x24
 	load_method = SINGLE_CASING|MAGAZINE
 	mag_well =  MAG_WELL_RIFLE

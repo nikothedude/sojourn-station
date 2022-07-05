@@ -185,7 +185,7 @@
 	name = "\"Lockpick-o-Matic\""
 	desc = "An anomalous weapon created by an unknown person (or group?), their work marked by a blue cross, these weapons are known to vanish and reappear when left alone. \
 			Someone had a sense of humor when designing this weapon."
-	caliber = "10x24"
+	caliber = CAL_1024
 	ammo_type = "/obj/item/ammo_casing/pistol"
 	mag_well = MAG_WELL_PULSE
 	magazine_type = /obj/item/ammo_magazine/c10x24

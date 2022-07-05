@@ -35,6 +35,36 @@
 	friends.Cut()
 	. = ..()
 
+/mob/living/carbon/superior_animal/proc/cover_check(var/atom/movable/enemy)
+	if (do_ranged_threat_check(enemy))
+
+/mob/living/carbon/superior_animal/proc/do_ranged_threat_check(var/atom/movable/enemy)
+	if (ishuman(enemy))
+		var/mob/living/carbon/human/humanenemy = enemy
+		var/list/hands = list(l_hand, r_hand)
+		var/passflags = null
+		var/flags = null
+		var/list/obj/item/projectile/proj
+		for (var/obj/item/gun/firearm in hands) //todo make all possible ranged attacks be part of this, consider psionics
+			if (istype(firearm, /obj/item/gun/energy))
+				var/obj/item/gun/energy/energygun = firearm
+				proj += energygun.projectile_type
+			else if (istype(firearm, /obj/item/gun/projectile))
+				var/obj/item/gun/projectile/projgun = firearm
+				if (!(projgun.chambered))
+					if (projgun.loaded.len)
+						proj += pick(projgun.loaded)
+					else if (projgun.caliber)
+						proj += projgun.caliber
+		var/length = (proj.len)
+		if (proj.len)
+			if (proj.len > 1)
+				for (var/obj/item/projectile/projectile_var in proj)
+					passflags += projectile_var.pass_flags
+					flags += projectile_var.pass_flags
+
+/mob/living/carbon/superior_animal/proc/run_for_cover()
+
 /mob/living/carbon/superior_animal/u_equip(obj/item/W as obj)
 	return
 
