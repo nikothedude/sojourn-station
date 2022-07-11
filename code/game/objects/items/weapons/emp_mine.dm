@@ -13,13 +13,10 @@
 
 /obj/item/emp_mine/bullet_act(var/obj/item/projectile/Proj)
 	if(prob(90) && (!(Proj.testing)))
-		explode()
+		explode(exploder = Proj)
 
-/obj/item/emp_mine/proc/explode()
-	var/turf/T = get_turf(src)
-	explosion(T,-1,0,3,7)
-	if(src)
-		qdel(src)
+/obj/item/emp_mine/explode(location = loc, devastation = -1, heavy = 0, light = 3, flash = 7, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
+	return ..(location, devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 
 /obj/item/emp_mine/proc/arm()
 	if(armed)

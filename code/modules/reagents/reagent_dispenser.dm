@@ -41,7 +41,7 @@
 	if (N)
 		amount_per_transfer_from_this = N
 
-/obj/structure/reagent_dispensers/proc/explode()
+/obj/structure/reagent_dispensers/proc/rupture()
 	visible_message(SPAN_DANGER("\The [src] ruptures!"))
 	chem_splash(loc, 5, list(reagents))
 	qdel(src)
@@ -49,15 +49,15 @@
 /obj/structure/reagent_dispensers/ex_act(severity)
 	switch(severity)
 		if(1)
-			explode()
+			rupture()
 			return
 		if(2)
 			if (prob(50))
-				explode()
+				rupture()
 				return
 		if(3)
 			if (prob(5))
-				explode()
+				rupture()
 				return
 /obj/structure/reagent_dispensers/get_item_cost(export)
 	if(export)

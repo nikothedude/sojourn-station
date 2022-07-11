@@ -107,7 +107,7 @@
 		if(3)
 			damage += 200
 
-/obj/machinery/power/supermatter/proc/explode()
+/obj/machinery/power/supermatter/explode(location = get_turf(src), devastation = explosion_power, heavy = (explosion_power * 1.25), light = (explosion_power * 1.5), flash = (explosion_power * 1.75), adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
 	log_and_message_admins("Supermatter exploded at [x] [y] [z]")
 	anchored = 1
 	grav_pulling = 1
@@ -122,10 +122,8 @@
 				H.adjust_hallucination(power, power)
 			var/rads = DETONATION_RADS * sqrt( 1 / (get_dist(mob, src) + 1) )
 			mob.apply_effect(rads, IRRADIATE)
-	spawn(pull_time)
-		explosion(get_turf(src), explosion_power, explosion_power * 1.25, explosion_power * 1.5, explosion_power * 1.75, 1)
-		qdel(src)
-		return
+	sleep(pull_time)
+	return ..(location, devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 
 //Changes color and luminosity of the light to these values if they were not already set
 /obj/machinery/power/supermatter/proc/shift_light(var/lum, var/clr)

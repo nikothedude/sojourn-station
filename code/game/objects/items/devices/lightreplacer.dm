@@ -158,7 +158,7 @@
 			qdel(L2)
 
 			if(target.on && target.rigged)
-				target.explode()
+				target.explode(exploder = U)
 			return
 
 		else

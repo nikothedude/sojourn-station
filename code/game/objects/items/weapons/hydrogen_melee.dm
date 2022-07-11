@@ -190,17 +190,15 @@
 /obj/item/hydrogen_grenade/throw_impact(atom/hit_atom, var/speed)
 	..()
 	if(armed)
-		explode()
+		explode(exploder = hit_atom)
 
 /obj/item/hydrogen_grenade/attack(mob/living/M, mob/living/user, target_zone)
 	if(..() && armed)
-		explode()
+		explode(exploder = user)
 
-/obj/item/hydrogen_grenade/proc/explode()
-	var/turf/T = get_turf(src)
-	explosion(T, 0, 1, 2, 4) // Explode
-	new /obj/effect/explosion(T)
-	for(var/mob/M in view(2, T)) // Burn every mob nearby.
+/obj/item/hydrogen_grenade/explode(location = get_turf(src), devastation = 0, heavy = 1, light = 2, flash = 4, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = FALSE)
+	. = ..(location, devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
+	for(var/mob/M in view(2, location)) // Burn every mob nearby.
 		to_chat(M, SPAN_DANGER("You feel a wave of heat scorch your body!"))
 		M.take_overall_damage(0, rand(burn_min, burn_max))
 	spawn(20)

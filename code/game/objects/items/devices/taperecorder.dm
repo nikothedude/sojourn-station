@@ -110,14 +110,14 @@
 	else
 		to_chat(user, SPAN_WARNING("It is already emagged!"))
 
-/obj/item/device/taperecorder/proc/explode()
+/obj/item/device/taperecorder/explode(devastation = 0, heavy = 0, light = 0, flash = 4, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
 	var/turf/T = get_turf(loc)
 	if(ismob(loc))
 		var/mob/M = loc
 		to_chat(M, SPAN_DANGER("\The [src] explodes!"))
 	if(T)
 		T.hotspot_expose(700,125)
-		explosion(T, 0, 0, 0, 4)
+		return ..(devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 	qdel(src)
 	return
 

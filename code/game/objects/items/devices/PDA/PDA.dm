@@ -783,14 +783,14 @@ var/global/list/obj/item/device/pda/PDAs = list()
 						else if (prob(difficulty * 7))
 							U.show_message(SPAN_WARNING("Energy feeds back into your [src]!"), 1)
 							ui.close()
-							detonate_act(src)
+							detonate_act(src, src)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge but failed, blowing themselves up")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge but failed.", 1)
 						else
 							U.show_message(SPAN_NOTICE("Success!"), 1)
 							log_admin("[key_name(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded")
 							message_admins("[key_name_admin(U)] just attempted to blow up [P] with the Detomatix cartridge and succeeded.", 1)
-							detonate_act(P)
+							detonate_act(P, src)
 					else
 						to_chat(U, "No charges left.")
 				else
@@ -845,7 +845,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 	if(locate(/obj/item/pen) in src)
 		add_overlay(image('icons/obj/pda.dmi', "pda_pen"))
 
-/obj/item/device/pda/proc/detonate_act(var/obj/item/device/pda/P)
+/obj/item/device/pda/proc/detonate_act(var/obj/item/device/pda/P, var/mob/living/carbon/human/attacker)
 	//TODO: sometimes these attacks show up on the message server
 	var/i = rand(1,100)
 	var/j = rand(0,1) //Possibility of losing the PDA after the detonation
@@ -856,7 +856,7 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 	//switch(i) //Yes, the overlapping cases are intended.
 	if(i<=10) //The traditional explosion
-		P.explode()
+		P.explode(exploder = attacker)
 		j=1
 		message += "Your [P] suddenly explodes!"
 	if(i>=10 && i<= 20) //The PDA burns a hole in the holder.
@@ -1306,13 +1306,15 @@ var/global/list/obj/item/device/pda/PDAs = list()
 
 
 
-/obj/item/device/pda/proc/explode() //This needs tuning. //Sure did.
-	if(!src.detonate) return
+/obj/item/device/pda/explode(devastation = 0, heavy = 0, light = 1, flash = rand(1,2), adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = FALSE) //This needs tuning. //Sure did.
+	if(!src.detonate)
+		return
 	var/turf/T = get_turf(src.loc)
 	if(T)
 		T.hotspot_expose(700,125)
-		explosion(T, 0, 0, 1, rand(1,2))
-	return
+		return ..(devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
+	else
+		return
 
 /obj/item/device/pda/Destroy()
 	PDAs -= src

@@ -297,18 +297,17 @@
 /obj/machinery/media/jukebox/attack_hand(var/mob/user as mob)
 	interact(user)
 
-/obj/machinery/media/jukebox/proc/explode()
+/obj/machinery/media/jukebox/explode(devastation = 0, heavy = 0, light = 1, flash = rand(1,2), adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
 	walk_to(src,0)
 	src.visible_message(SPAN_DANGER("\the [src] blows apart!"), 1)
-
-	explosion(src.loc, 0, 0, 1, rand(1,2), 1)
 
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread
 	s.set_up(3, 1, src)
 	s.start()
 
 	new /obj/effect/decal/cleanable/blood/oil(src.loc)
-	qdel(src)
+
+	return ..(devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 
 /obj/machinery/media/jukebox/emag_act(var/remaining_charges, var/mob/user)
 	if(!emagged)

@@ -368,11 +368,11 @@ disabled
 	//first bust whatever is in the turf
 	for(var/atom/A in T)
 		if(A != src && !A.CanPass(src, src.loc, 0.5, 0)) //only ram stuff that would actually block us
-			A.ex_act(hitpwr)
+			A.ex_act(hitpwr, src)
 
 	//then, ram the turf if it still exists
 	if(T && !T.CanPass(src, src.loc, 0.5, 0))
-		T.ex_act(hitpwr)
+		T.ex_act(hitpwr, src)
 
 //process getting 'hit' by colliding with a dense object
 //or randomly when ramming turfs
@@ -439,7 +439,7 @@ disabled
 
 /obj/effect/meteor/medium/meteor_effect()
 	..()
-	explosion(src.loc, 0, 1, 2, 3, 0)
+	explosion(src.loc, 0, 1, 2, 3, 0, exploder = src)
 
 //Large-sized
 /obj/effect/meteor/big
@@ -451,7 +451,7 @@ disabled
 
 /obj/effect/meteor/big/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0)
+	explosion(src.loc, 1, 2, 3, 4, 0, exploder = src)
 
 //Flaming meteor
 /obj/effect/meteor/flaming
@@ -463,7 +463,7 @@ disabled
 
 /obj/effect/meteor/flaming/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0, 0, 5)
+	explosion(src.loc, 1, 2, 3, 4, 0, 0, 5, exploder = src)
 
 //Radiation meteor
 /obj/effect/meteor/irradiated
@@ -474,7 +474,7 @@ disabled
 
 /obj/effect/meteor/irradiated/meteor_effect()
 	..()
-	explosion(src.loc, 0, 0, 4, 3, 0)
+	explosion(src.loc, 0, 0, 4, 3, 0, exploder = src)
 	new /obj/effect/decal/cleanable/greenglow(get_turf(src))
 	//SSradiation.radiate(src, 50) //TODO: Port bay radiation system
 
@@ -518,7 +518,7 @@ disabled
 
 /obj/effect/meteor/tunguska/meteor_effect()
 	..()
-	explosion(src.loc, 3, 6, 9, 20, 0)
+	explosion(src.loc, 3, 6, 9, 20, 0, exploder = src)
 
 // This is the final solution against shields - a single impact can bring down most shield generators.
 /obj/effect/meteor/supermatter
@@ -529,7 +529,7 @@ disabled
 
 /obj/effect/meteor/supermatter/meteor_effect()
 	..()
-	explosion(src.loc, 1, 2, 3, 4, 0)
+	explosion(src.loc, 1, 2, 3, 4, 0, exploder = src)
 	for(var/obj/machinery/power/apc/A in range(rand(12, 20), src))
 		A.energy_fail(round(10 * rand(8, 12)))
 

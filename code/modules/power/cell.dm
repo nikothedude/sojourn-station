@@ -190,7 +190,7 @@
 		S.reagents.clear_reagents()
 
 
-/obj/item/cell/proc/explode()
+/obj/item/cell/explode(location = get_turf(loc), adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
 	var/turf/T = get_turf(src.loc)
 /*
  * 1000-cell	explosion(T, 0, 0, 1, 1)
@@ -213,9 +213,7 @@
 	log_admin("LOG: Rigged power cell explosion, last touched by [fingerprintslast] at [T.x], [T.y], [T.z]")
 	message_admins("LOG: Rigged <a href='?_src_=vars;Vars=\ref[src]'>[src]</a> explosion, last touched by [fingerprintslast] at [T.x], [T.y], [T.z]")
 
-	qdel(src)
-
-	explosion(T, devastation_range, heavy_impact_range, light_impact_range, flash_range)
+	return ..(location, devastation_range, heavy_impact_range, light_impact_range, flash_range, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 
 /obj/item/cell/proc/corrupt()
 	if(charge<2)

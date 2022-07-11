@@ -132,7 +132,7 @@
 						occupant_message(SPAN_WARNING("\The [target] is too durable to drill through."))
 					else
 						log_message("Drilled through \the [target]")
-						target.ex_act(2)
+						target.ex_act(2, src)
 				else if(istype(target, /turf/simulated/mineral))
 					for(var/turf/simulated/mineral/M in trange(1, chassis))
 						if(get_dir(chassis,M)&chassis.dir)
@@ -157,7 +157,7 @@
 									ore.Move(ore_box)
 				else if(target.loc == C)
 					log_message("Drilled through \the [target]")
-					target.ex_act(2)
+					target.ex_act(2, src)
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/drill/diamonddrill
@@ -187,7 +187,7 @@
 					var/turf/simulated/wall/W = target
 					if(!W.reinf_material || do_after_cooldown(target))//To slow down how fast mechs can drill through the station
 						log_message("Drilled through \the [target]")
-						target.ex_act(3)
+						target.ex_act(3, src)
 				else if(istype(target, /turf/simulated/mineral))
 					for(var/turf/simulated/mineral/M in trange(1, chassis))
 						if(get_dir(chassis,M)&chassis.dir)
@@ -210,7 +210,7 @@
 								ore.Move(ore_box)
 				else if(target.loc == C)
 					log_message("Drilled through \the [target]")
-					target.ex_act(2)
+					target.ex_act(2, src)
 		return 1
 
 /obj/item/mecha_parts/mecha_equipment/tool/extinguisher

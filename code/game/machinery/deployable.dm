@@ -236,7 +236,7 @@ for reference:
 
 	icon_state = "barrier[locked]"
 
-/obj/machinery/deployable/barrier/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/deployable/barrier/attackby(var/obj/item/W, var/mob/user)
 	if(user.a_intent == I_HELP && istype(W, /obj/item/gun))
 		var/obj/item/gun/G = W
 		G.gun_brace(user, src)
@@ -281,18 +281,18 @@ for reference:
 				health -= W.force * 0.5
 			else
 		if(health <= 0)
-			explode()
+			explode(0, 0, 2, exploder = W)
 		..()
 
 /obj/machinery/deployable/barrier/ex_act(severity)
 	switch(severity)
 		if(1)
-			explode()
+			explode(0, 0, 2)
 			return
 		if(2)
 			health -= 25
 			if(health <= 0)
-				explode()
+				explode(0, 0, 2)
 			return
 
 /obj/machinery/deployable/barrier/emp_act(severity)
@@ -315,7 +315,7 @@ for reference:
 		if(H.checkpass(PASSTABLE) && H.stats?.getPerk(PERK_PARKOUR))
 			return TRUE
 
-/obj/machinery/deployable/barrier/proc/explode()
+/obj/machinery/deployable/barrier/explode(deveastation = 0, heavy = 1, light = 2, flash = 2, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
 
 	visible_message(SPAN_DANGER("[src] blows apart!"))
 	var/turf/Tsec = get_turf(src)
@@ -327,9 +327,7 @@ for reference:
 	s.set_up(3, 1, src)
 	s.start()
 
-	explosion(src.loc,0,0,2)
-	if(src)
-		qdel(src)
+	return ..(deveastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 
 /obj/machinery/deployable/barrier/emag_act(remaining_charges, mob/user)
 	if(emagged == FALSE)

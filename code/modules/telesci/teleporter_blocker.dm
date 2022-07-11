@@ -14,7 +14,7 @@
 	var/area/area
 	var/amount_extra_blocked = 50
 
-/obj/machinery/telesci_inhibitor/proc/explode()
+/obj/machinery/telesci_inhibitor/explode()
 	var/turf/T = get_turf(src)
 	explosion(T, -1, 1, 2, 5) //Like a landmine but with less flash.
 	bluespace_entropy(20, get_turf(src), TRUE)
@@ -65,6 +65,9 @@
 
 /obj/machinery/telesci_inhibitor/proc/can_inhibit()
 	return (!stat)
+
+/obj/machinery/telesci_inhibitor/proc/timer_holder()
+	addtimer(CALLBACK(src, .proc/explode), 1 SECOND)
 
 /////////////////////////////
 // Additional Vars         //

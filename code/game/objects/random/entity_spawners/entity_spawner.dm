@@ -26,12 +26,7 @@
 	/// Amount of ticks a light EMP will stun for
 	var/light_emp_stun = 8
 
-	/**
-	 * Associative list, enter typepaths as the key, chance to drop as the value. Each item will be considered individually in terms of probability.
-	 * Very literal. Apon deconstruction of the spawner, aka when it gets shot a lot, it drops whatever is in this list. Even mobs.
-	 * Each entry is one instance of it that will be spawned.
-	**/
-	var/list/atom/movable/dropped = list(
+	dropped = list(
 									/obj/item/stack/material/steel/{amount = 15} = 100,
 									/obj/item/stack/material/glass/random = 95,
 									/obj/item/stack/material/plasteel/random = 15,

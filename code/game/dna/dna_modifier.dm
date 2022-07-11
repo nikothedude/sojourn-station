@@ -157,12 +157,12 @@
 	src.icon_state = "scanner_0"
 	return
 
-/obj/machinery/dna_scannernew/ex_act(severity)
+/obj/machinery/dna_scannernew/ex_act(severity, source)
 	switch(severity)
 		if(1.0)
 			for(var/atom/movable/A as mob|obj in src)
 				A.loc = src.loc
-				ex_act(severity)
+				ex_act(severity, source)
 				//Foreach goto(35)
 			//SN src = null
 			qdel(src)
@@ -171,7 +171,7 @@
 			if (prob(50))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
-					ex_act(severity)
+					ex_act(severity, source)
 					//Foreach goto(108)
 				//SN src = null
 				qdel(src)
@@ -180,7 +180,7 @@
 			if (prob(25))
 				for(var/atom/movable/A as mob|obj in src)
 					A.loc = src.loc
-					ex_act(severity)
+					ex_act(severity, source)
 					//Foreach goto(181)
 				//SN src = null
 				qdel(src)

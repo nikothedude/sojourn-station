@@ -21,22 +21,22 @@
 				SPAN_DANGER("[user] attempts to pick up \the [src] only to hear a beep as it explodes in your hands!"),
 				SPAN_DANGER("You attempt to pick up \the [src] only to hear a beep as it explodes in your hands!")
 				)
-		explode()
+		explode(exploder = user)
 	else
 		user.visible_message(
 				SPAN_DANGER("[user] attempts to pick up \the [src] and somehow doesn't blow himself up doing it!"),
 				SPAN_DANGER("You attempt to pick up \the [src] and somehow you don't blow yourself up doing it!")
 				)
 
-/obj/item/mine_old/proc/explode(var/mob/living/M)
+/obj/item/mine_old/explode(devastation = 0, heavy = 3, light = 3, flash = 4, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source, exploder, qdel_src = TRUE)
 	var/datum/effect/effect/system/spark_spread/s = new /datum/effect/effect/system/spark_spread()
 	triggered = 1
 	s.set_up(3, 1, src)
 	s.start()
-	explosion(loc, 0, 3, 3, 4) //land mines are dangerous, folks.
 	visible_message("\The [src.name] detonates!")
 	qdel(s)
-	qdel(src)
+
+	return ..(devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 
 /obj/item/mine_old/attackby(obj/item/I, mob/user)
 	if(QUALITY_PULSING in I.tool_qualities)
@@ -56,13 +56,13 @@
 	else
 		user.visible_message(
 			SPAN_DANGER("[user] has set off \the [src]!"))
-		explode()
+		explode(exploder = I)
 		return
 
 /obj/item/mine_old/bullet_act(var/obj/item/projectile/Proj)
 	if (!(Proj.testing))
 		if(prob(90))
-			explode()
+			explode(exploder = Proj)
 
 /obj/item/mine_old/ex_act(severity)
 	if(severity <= 2 || prob(90))

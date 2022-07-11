@@ -139,14 +139,12 @@
 	if(prob(30)) //30% chance to just straight up explode.
 		src.visible_message(SPAN_DANGER("\The [src] begins to vibrate, its crystal glowing brightly!"))
 		do_sparks(6, FALSE, get_turf(src))
-		addtimer(CALLBACK(src, /obj/machinery/telesci_relay/proc/explode), 1 SECOND)
+		addtimer(CALLBACK(src, .proc/explode), 1 SECOND)
 
-/obj/machinery/telesci_relay/proc/explode()
-	var/turf/T = get_turf(src)
-	explosion(T, -1, 1, 2, 5) //Like a landmine but with less flash.
+/obj/machinery/telesci_relay/explode(location = get_turf(src), devastation = -1, heavy = 1, light = 2, flash = 5, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
 	qdel(stored_crystal)
 	bluespace_entropy(20, get_turf(src), TRUE)
-	qdel(src)
+	return ..(location, devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 
 /////////////////////////////
 //         Additional Vars //

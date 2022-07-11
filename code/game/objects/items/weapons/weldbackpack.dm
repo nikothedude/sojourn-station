@@ -47,13 +47,13 @@
 	to_chat(user, text("\icon[] [] units of fuel left!", src, src.reagents.total_volume))
 	return
 
-/obj/item/weldpack/proc/explode()
+/obj/item/weldpack/explode(location = loc, devastation = 0, heavy = 1, light = 2, flash = 2, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
 	if (reagents.total_volume > 150)
-		explosion(src.loc,1,2,4)
+		explosion(location,1,2,4,5, adminlog, z_transfer, explosion_source, exploder)
 	else if (reagents.total_volume > 50)
-		explosion(src.loc,0,1,3)
+		explosion(location,0,1,3,4, adminlog, z_transfer, explosion_source, exploder)
 	else if (reagents.total_volume > 0)
-		explosion(src.loc,0,1,2)
+		explosion(location,0,1,2,3, adminlog, z_transfer, explosion_source, exploder)
 	if(src)
 		qdel(src)
 

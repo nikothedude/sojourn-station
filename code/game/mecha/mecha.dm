@@ -149,7 +149,7 @@
 		loc.Exited(src)
 
 	if(prob(30) && !noexplode)
-		explosion(get_turf(loc), 0, 0, 1, 3)
+		explosion(get_turf(loc), 0, 0, 1, 3, exploder = src)
 
 	if(wreckage)
 		var/obj/effect/decal/mecha_wreckage/WR = new wreckage(loc)
@@ -714,17 +714,17 @@ assassination method if you time it right*/
 	//Wreck the contents of the tile
 	for (var/atom/movable/AM in dest)
 		if (AM != src)
-			AM.ex_act(3)
+			AM.ex_act(3, src)
 
 	//Damage the tile itself
-	dest.ex_act(2)
+	dest.ex_act(2, src)
 
 	//Damage surrounding tiles
 	for (var/turf/T in range(1, src))
 		if (T == dest)
 			continue
 
-		T.ex_act(3)
+		T.ex_act(3, src)
 
 	//And do some screenshake for everyone in the vicinity
 	for (var/mob/M in range(20, src))

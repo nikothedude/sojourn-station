@@ -197,7 +197,7 @@
 		core = null
 		//When the core is gone, the blob starts dying
 		//The closer it was to the core, the faster it dies. So death spreads out radially
-		take_damage((1.0 / coredist))
+		take_damage_wrapper((1.0 / coredist), src)
 	update_icon()
 
 /*
@@ -347,11 +347,11 @@
 
 	var/obj/vehicle/V = locate() in T
 	if(V)
-		V.ex_act(2)
+		V.ex_act(2, src)
 		return
 	var/obj/machinery/bot/B = locate() in T
 	if(B)
-		B.ex_act(2)
+		B.ex_act(2, src)
 		return
 	var/obj/mecha/M = locate() in T
 	if(M)

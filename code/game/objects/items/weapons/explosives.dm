@@ -67,15 +67,13 @@
 		target.add_overlay(image_overlay)
 		to_chat(user, "Bomb has been planted. Timer is counting down from [timer].")
 		spawn(timer*10)
-			explode(get_turf(target))
+			explode(get_turf(target), exploder = user)
 
-/obj/item/plastique/proc/explode(var/location)
+/obj/item/plastique/explode(location = loc, devastation = 0, heavy = 0, light = 2, flash = 3, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
 	if(!target)
 		target = get_atom_on_turf(src)
 	if(!target)
 		target = src
-	if(location)
-		explosion(location, 0, 0, 2, 3)
 
 	if(target)
 		if (istype(target, /turf/simulated/wall))
@@ -92,7 +90,8 @@
 
 	if(target)
 		target.cut_overlay(image_overlay)
-	qdel(src)
+	if(location)
+		return ..(location, devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 
 /obj/item/plastique/attack(mob/M as mob, mob/user as mob, def_zone)
 	return

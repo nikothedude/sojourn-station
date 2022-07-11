@@ -122,6 +122,6 @@
 	set_light(0)
 	update_icons()
 
-/mob/living/bot/proc/explode()
+/mob/living/bot/explode()
 	qdel(src)
 

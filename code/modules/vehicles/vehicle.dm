@@ -152,7 +152,7 @@
 /obj/vehicle/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			explode()
+			explode_act()
 			return
 		if(2.0)
 			health -= rand(5,10)*fire_dam_coeff
@@ -213,7 +213,7 @@
 			to_chat(user, SPAN_WARNING("You bypass [src]'s controls."))
 		return 1
 
-/obj/vehicle/proc/explode()
+/obj/vehicle/proc/explode_act()
 	src.visible_message(SPAN_DANGER("\The [src] blows apart!"))
 	var/turf/Tsec = get_turf(src)
 
@@ -241,7 +241,7 @@
 
 /obj/vehicle/healthCheck()
 	if(health <= 0)
-		explode()
+		explode_act()
 
 /obj/vehicle/proc/powercheck()
 	if(!cell && !powered)

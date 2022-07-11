@@ -663,12 +663,11 @@
 
 // explode the light
 
-/obj/machinery/light/proc/explode()
-	var/turf/T = get_turf(src.loc)
+/obj/machinery/light/explode(location = get_turf(loc), devastation = 0, heavy = 0, light = 2, flash = 2, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = FALSE)
 	spawn(0)
 		broken()	// break it first to give a warning
 		sleep(2)
-		explosion(T, 0, 0, 2, 2)
+		. = ..(location, devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 		sleep(1)
 		qdel(src)
 

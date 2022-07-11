@@ -160,7 +160,7 @@
 		if(M.lying)
 			base_cover_chance += 75	//Lying down lets you catch less bullets, 95% odds to just have the bullet hit the cover as your unarmed and resting
 	if(prob(base_cover_chance))
-		health -= P.get_structure_damage()/2
+		take_damage(P.get_structure_damage()/2)
 		if(health > 0)
 			if (!(P.testing))
 				visible_message(SPAN_WARNING("[P] hits \the [src]!"))

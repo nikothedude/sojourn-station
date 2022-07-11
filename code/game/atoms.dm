@@ -50,8 +50,56 @@
 	// Why are areas derived from /atom instead of /datum?  They're abstracts!
 	var/health    = 99999 // RPG boss unless  otherwise defined
 	var/maxHealth = 99999
+
+	/// If false, take_damage_check will return false.
+	var/takeDamage = FALSE
+
+	/**
+	 * Associative list, enter typepaths as the key, chance to drop as the value. Each item will be considered individually in terms of probability.
+	 * Very literal. Apon deconstruction of the spawner, aka when it gets shot a lot, it drops whatever is in this list. Even mobs.
+	 * Each entry is one instance of it that will be spawned.
+	**/
+	var/list/atom/dropped = list(
+
+	)
+
+	/// If true, all items in dropped will be considered when death_actions is called.
+	var/drop_items_on_death = TRUE
+	/// If true, dropped will be cleared when death_actions is called.
+	var/clear_dropped_on_death = TRUE
+
 	// And a status
 	var/stat = 0
+
+/atom/proc/take_damage_wrapper(damage, source, doDamageOnZeroHealth = FALSE)
+	var/obj/item/projectile/Proj
+	if (istype(source, /obj/item/projectile))
+		Proj = source
+	if (!Proj || (!(Proj.testing)))
+		take_damage(damage, source)
+
+/atom/proc/take_damage(damage, source, doDamageOnZeroHealth = FALSE)
+	if (takeDamage && (!doDamageOnZeroHealth || (health > 0)))
+		health -= damage
+		if (health < 0)
+			death_actions(damage, source)
+
+/atom/proc/death_actions(damage, source)
+	if (drop_items_on_death)
+		if (dropped && dropped.len)
+			for (var/entity in dropped)
+				if (prob(dropped[entity]))
+					new entity(loc)
+			if (clear_dropped_on_death)
+				dropped.Cut()
+
+/atom/proc/explode(location = loc, devastation = 0, heavy = 1, light = 2, flash = 2, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
+	explosion(location, devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder)
+	if (qdel_src && src)
+		qdel(src)
+
+	return TRUE
+
 
 /atom/proc/update_icon()
 	return
@@ -445,7 +493,7 @@ its easier to just keep the beam vertical.
 /atom/proc/container_dir_changed(new_dir)
 	return
 
-/atom/proc/ex_act()
+/atom/proc/ex_act(source)
 	return
 
 /atom/proc/emag_act(var/remaining_charges, var/mob/user, var/emag_source)

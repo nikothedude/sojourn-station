@@ -135,7 +135,7 @@
 		to_chat(user, SPAN_NOTICE("You short out the security protocols and overload [src]'s cell, priming it to explode in a short time."))
 		spawn(100)	to_chat(src, SPAN_DANGER("Your cell seems to be outputting a lot of power..."))
 		spawn(200)	to_chat(src, SPAN_DANGER("Internal heat sensors are spiking! Something is badly wrong with your cell!"))
-		spawn(300)	src.explode()
+		spawn(300)	src.explode(exploder = user)
 
 /mob/living/simple_animal/spiderbot/proc/transfer_personality(var/obj/item/device/mmi/M as obj)
 
@@ -144,10 +144,10 @@
 		src.ckey = M.brainmob.ckey
 		src.name = "spider-bot ([M.brainmob.name])"
 
-/mob/living/simple_animal/spiderbot/proc/explode() //When emagged.
+/mob/living/simple_animal/spiderbot/explode(location = loc, devastation = 0, heavy = 0, light = 3, flash = 5, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = FALSE) //When emagged.
 	src.visible_message(SPAN_DANGER("\The [src] makes an odd warbling noise, fizzles, and explodes!"))
-	explosion(get_turf(loc), 0, 0, 3, 5)
 	eject_brain()
+	. = ..(location, devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 	death()
 
 /mob/living/simple_animal/spiderbot/update_icon()

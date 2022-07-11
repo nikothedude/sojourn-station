@@ -182,7 +182,7 @@
 
 /obj/item/mecha_parts/mecha_equipment/ranged_weapon/ballistic/lmg/scrap/loaded
 	loaded = TRUE
-	
+
 /obj/item/mech_ammo_box/cannon
 	name = "Autocannon ammunition box"
 	desc = "Gun ammunition stored in a shiny new box. You can see caliber information on the label."
@@ -193,7 +193,7 @@
 	amount_per_click = 3
 	ammo_type = ".460"
 	price_tag = 30
-	
+
 /obj/item/mecha_parts/mecha_equipment/ranged_weapon/ballistic/cannon
 	name = "\improper Autocannon"
 	icon_state = "mecha_cannon"
@@ -204,13 +204,13 @@
 	projectiles = 25
 	max_ammo = 25
 	projectiles_per_shot = 2
-	deviation = 2 
+	deviation = 2
 	fire_cooldown = 2
 	ammo_type = ".460"
 
 /obj/item/mecha_parts/mecha_equipment/ranged_weapon/ballistic/cannon/loaded
 	loaded = TRUE
-	
+
 /obj/item/mecha_parts/mecha_equipment/ranged_weapon/ballistic/cannon/scrap
 	name = "\improper Ancient Mech Rifle"
 	desc = "A weapon once wielded by anncient mechs once more finding service, however clearly showing its age."
@@ -302,7 +302,7 @@
 
 	throw_impact(atom/hit_atom)
 		if(primed)
-			explosion(hit_atom, 0, 1, 2, 4)
+			explosion(hit_atom, 0, 1, 2, 4, exploder = src)
 			qdel(src)
 		else
 			..()

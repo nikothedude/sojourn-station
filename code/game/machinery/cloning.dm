@@ -294,26 +294,26 @@
 		malfunction()
 	..()
 
-/obj/machinery/clonepod/ex_act(severity)
+/obj/machinery/clonepod/ex_act(severity, source)
 	switch(severity)
 		if(1.0)
 			for(var/atom/movable/A in src)
 				A.loc = loc
-				ex_act(severity)
+				ex_act(severity, source)
 			qdel(src)
 			return
 		if(2.0)
 			if(prob(50))
 				for(var/atom/movable/A in src)
 					A.loc = loc
-					ex_act(severity)
+					ex_act(severity, source)
 				qdel(src)
 				return
 		if(3.0)
 			if(prob(25))
 				for(var/atom/movable/A in src)
 					A.loc = loc
-					ex_act(severity)
+					ex_act(severity, source)
 				qdel(src)
 				return
 		else

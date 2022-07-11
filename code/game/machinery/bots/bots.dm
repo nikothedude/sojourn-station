@@ -25,9 +25,6 @@
 	on = 0
 	set_light(0)
 
-/obj/machinery/bot/proc/explode()
-	qdel(src)
-
 /obj/machinery/bot/healthCheck()
 	if (src.health <= 0)
 		src.explode()
@@ -93,7 +90,7 @@
 /obj/machinery/bot/ex_act(severity)
 	switch(severity)
 		if(1.0)
-			src.explode()
+			qdel(src)
 			return
 		if(2.0)
 			src.health -= rand(5,10)*fire_dam_coeff

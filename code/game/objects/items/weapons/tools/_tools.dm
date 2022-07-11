@@ -627,7 +627,7 @@
 
 				if(user)
 					to_chat(user, SPAN_DANGER("You overload the cell in the [src]!"))
-				C.explode()
+				C.explode(exploder = user)
 				if(T)
 					T.cell = null
 
@@ -913,10 +913,10 @@
 			to_chat(user, SPAN_DANGER("You begin welding on the [O] and with a moment of lucidity you realize, this might not have been the smartest thing you've ever done."))
 			if(istype(O, /obj/structure/reagent_dispensers/fueltank))
 				var/obj/structure/reagent_dispensers/fueltank/T = O
-				T.explode()
+				T.explode(exploder = user)
 			else if(istype(O, /obj/item/weldpack))
 				var/obj/item/weldpack/P = O
-				P.explode()
+				P.explode(exploder = user)
 			return
 		else if(istype(O, /mob/living/carbon/superior_animal/roach/benzin))
 			var/mob/living/carbon/superior_animal/roach/benzin/B = O

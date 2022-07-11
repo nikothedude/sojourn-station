@@ -82,9 +82,8 @@
 		spawn(duration)
 			stat &= ~EMPED
 
-/obj/machinery/power/port_gen/proc/explode()
-	explosion(src.loc, 0, 3, 5, 0)
-	qdel(src)
+/obj/machinery/power/port_gen/explode(location = loc, devastation = 0, heavy = 3, light = 5, flash = 0, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
+	return ..(location, devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 
 #define TEMPERATURE_DIVISOR 40
 #define TEMPERATURE_CHANGE_MAX 20

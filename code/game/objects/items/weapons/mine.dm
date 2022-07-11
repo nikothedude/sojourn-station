@@ -35,7 +35,7 @@
 /obj/item/mine/bullet_act(var/obj/item/projectile/Proj)
 	if (!(Proj.testing))
 		if(prob(90))
-			explode()
+			explode(exploder = Proj)
 
 /obj/item/mine/armed
 	armed = TRUE
@@ -79,12 +79,9 @@
 /obj/item/mine/ignite_act()
 	explode()
 
-/obj/item/mine/proc/explode()
-	var/turf/T = get_turf(src)
-	explosion(T,explosion_d_size,explosion_h_size,explosion_l_size,explosion_f_size)
-	fragment_explosion(T, spread_radius, fragment_type, num_fragments, null, damage_step)
-	if(src)
-		qdel(src)
+/obj/item/mine/explode(location = get_turf(src), devastation = explosion_d_size, heavy = explosion_h_size, light = explosion_l_size, flash = explosion_f_size, adminlog = TRUE, z_transfer = UP|DOWN, explosion_source = src, exploder, qdel_src = TRUE)
+	fragment_explosion(location, spread_radius, fragment_type, num_fragments, null, damage_step)
+	return ..(location, devastation, heavy, light, flash, adminlog, z_transfer, explosion_source, exploder, qdel_src)
 
 /obj/item/mine/update_icon()
 	cut_overlays()
@@ -153,7 +150,7 @@
 						SPAN_DANGER("[user] attempts to pick up \the [src] only to hear a beep as it explodes in \his hands!"),
 						SPAN_DANGER("You attempt to pick up \the [src] only to hear a beep as it explodes in your hands!")
 						)
-					explode()
+					explode(exploder = user)
 					return
 				else
 					user.visible_message(
@@ -192,7 +189,7 @@
 			user.visible_message(
 				SPAN_DANGER("\The [src] is hit with [I] and it explodes!"),
 				SPAN_DANGER("You hit \the [src] with [I] and it explodes!"))
-			explode()
+			explode(exploder = I)
 		return
 
 
@@ -211,7 +208,7 @@
 						return
 			var/true_prob_explode = prob_explode - AM.skill_to_evade_traps()
 			if(prob(true_prob_explode))
-				explode()
+				explode(exploder = AM)
 				return
 	.=..()
 
