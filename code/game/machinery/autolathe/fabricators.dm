@@ -417,7 +417,6 @@
 		processing = FALSE
 		menustat = "menu" //complete adds an extra step thats annoying to deal with
 		update_icon()
-		return TRUE
 
 /obj/machinery/bulletfabricator/Topic(href, href_list)
 	if(stat & BROKEN) return
