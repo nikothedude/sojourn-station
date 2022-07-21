@@ -29,6 +29,8 @@ var/const/GHOST_IMAGE_ALL = ~GHOST_IMAGE_NONE
 		ghost_sightless_images |= ghost_image //so ghosts can see the eye when they disable ghost sight
 	updateallghostimages()
 
+	SSmobs.ghost_list += src
+
 /mob/observer/Destroy()
 	if (ghost_image)
 		ghost_darkness_images -= ghost_image
@@ -36,6 +38,8 @@ var/const/GHOST_IMAGE_ALL = ~GHOST_IMAGE_NONE
 		qdel(ghost_image)
 		ghost_image = null
 		updateallghostimages()
+
+	SSmobs.ghost_list -= src
 	. = ..()
 
 mob/observer/check_airflow_movable()
