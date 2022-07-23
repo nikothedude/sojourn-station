@@ -1,5 +1,11 @@
-#define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup || !target.comp_lookup[sigtype] ? NONE : target._SendSignal(sigtype, list(##arguments)) )
+/// Used to trigger signals and call procs registered for that signal
+/// The datum hosting the signal is automaticaly added as the first argument
+/// Returns a bitfield gathered from all registered procs
+/// Arguments given here are packaged in a list and given to _SendSignal
+#define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup?[sigtype] ? NONE : target._SendSignal(sigtype, list(target, ##arguments)) )
 
+/// DO NOT USE. Only for compatability. Remove once all instances are replaced with SEND_SIGNAL.
+#define SEND_SIGNAL_LEGACY
 #define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
 
 /// Signifies that this proc is used to handle signals.
@@ -152,5 +158,19 @@
 
 // OVERMAP
 #define COMSIG_SHIP_STILL "ship_still" // /obj/effect/overmap/ship/Process() && is_still()
+
+// MOVEMENTSS
+///from [/datum/move_loop/start_loop] ():
+#define COMSIG_MOVELOOP_START "moveloop_start"
+///from [/datum/move_loop/stop_loop] ():
+#define COMSIG_MOVELOOP_STOP "moveloop_stop"
+///from [/datum/move_loop/process] ():
+#define COMSIG_MOVELOOP_PREPROCESS_CHECK "moveloop_preprocess_check"
+	#define MOVELOOP_SKIP_STEP (1<<0)
+///from [/datum/move_loop/process] (succeeded, visual_delay):
+#define COMSIG_MOVELOOP_POSTPROCESS "moveloop_postprocess"
+//from [/datum/move_loop/has_target/jps/recalculate_path] ():
+#define COMSIG_MOVELOOP_JPS_REPATH "moveloop_jps_repath"
+
 
 /*******Non-Signal Component Related Defines*******/
