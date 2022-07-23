@@ -898,3 +898,14 @@
 				return FALSE
 
 	return TRUE
+
+/// Return either pick(list) or null if list is not of type /list or is empty
+/proc/safepick(list/L)
+	if(LAZYLEN(L))
+		return pick(L)
+
+/// Checks if the list is empty
+/proc/isemptylist(list/L)
+	if(!L.len)
+		return TRUE
+	return FALSE
