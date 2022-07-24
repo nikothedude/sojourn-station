@@ -7,7 +7,7 @@
  * * BB_SONG_INSTRUMENT - set by this subtree, is the song datum the pawn plays music from.
  * * BB_SONG_LINES - not set by this subtree, is the song loaded into the song datum.
  */
-/datum/ai_planning_subtree/generic_play_instrument/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/*/datum/ai_planning_subtree/generic_play_instrument/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/datum/weakref/player_ref = controller.blackboard[BB_SONG_INSTRUMENT]
 	var/obj/item/instrument/song_player = player_ref?.resolve()
 
@@ -21,7 +21,7 @@
 		controller.queue_behavior(/datum/ai_behavior/setup_instrument, BB_SONG_INSTRUMENT, BB_SONG_LINES)
 
 	if(!song_player.song.playing) //we may stop playing if we weren't playing before, were setting up dk theme, or ran out of repeats (also causing setup behavior)
-		controller.queue_behavior(/datum/ai_behavior/play_instrument, BB_SONG_INSTRUMENT)
+		controller.queue_behavior(/datum/ai_behavior/play_instrument, BB_SONG_INSTRUMENT)*/
 
 /**
  * Generic Resist Subtree, resist if it makes sense to!
@@ -31,12 +31,12 @@
  * relevant blackboards:
  * * None!
  */
-/datum/ai_planning_subtree/generic_resist/SelectBehaviors(datum/ai_controller/controller, delta_time)
+/*/datum/ai_planning_subtree/generic_resist/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/mob/living/living_pawn = controller.pawn
 
 	if(SHOULD_RESIST(living_pawn) && DT_PROB(RESIST_SUBTREE_PROB, delta_time))
 		controller.queue_behavior(/datum/ai_behavior/resist) //BRO IM ON FUCKING FIRE BRO
-		return SUBTREE_RETURN_FINISH_PLANNING //IM NOT DOING ANYTHING ELSE BUT EXTUINGISH MYSELF, GOOD GOD HAVE MERCY.
+		return SUBTREE_RETURN_FINISH_PLANNING //IM NOT DOING ANYTHING ELSE BUT EXTUINGISH MYSELF, GOOD GOD HAVE MERCY.*/ //NIKO TODO re-enable
 
 /**
  * Generic Hunger Subtree,

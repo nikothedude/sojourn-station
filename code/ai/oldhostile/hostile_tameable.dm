@@ -149,7 +149,7 @@
 	if(IS_DEAD_OR_INCAP(living_pawn))
 		return
 
-	var/spoken_text = speech_args[SPEECH_MESSAGE] // probably should check for full words
+	var/spoken_text = speech_args // probably should check for full words
 	var/command
 	if(findtext(spoken_text, "stop") || findtext(spoken_text, "stay"))
 		command = COMMAND_STOP

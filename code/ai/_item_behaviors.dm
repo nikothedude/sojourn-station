@@ -8,7 +8,7 @@
 	if(!istype(item_holder))
 		finish_action(controller, FALSE) //We're no longer beind held. abort abort!!
 	item_pawn.visible_message(span_warning("[item_pawn] slips out of the hands of [item_holder]!"))
-	item_holder.dropItemToGround(item_pawn, TRUE)
+	item_pawn.loc = get_turf(item_holder) //suboptimal, NIKO TODO
 	finish_action(controller, TRUE)
 
 

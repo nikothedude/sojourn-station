@@ -78,3 +78,8 @@
 #define TURF_PATHING_PASS_PROC 1
 /// Turf is never passable
 #define TURF_PATHING_PASS_NO 2
+
+GLOBAL_LIST_INIT(dangerous_turfs, typecacheof(list(
+	/turf/simulated/open,
+	/turf/space,
+)))
