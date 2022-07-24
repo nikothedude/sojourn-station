@@ -9,6 +9,10 @@
 		Master.current_ticklimit = original_tick_limit;\
 	}
 
+/// Returns true if the MC is initialized and running.
+/// Optional argument init_stage controls what stage the mc must have initializted to count as initialized. Defaults to INITSTAGE_MAX if not specified.
+#define MC_RUNNING(INIT_STAGE...) (Master && Master.processing > 0 && Master.current_runlevel && Master.init_stage_completed == (max(min(INITSTAGE_MAX, ##INIT_STAGE), 1)))
+
 // Used to smooth out costs to try and avoid oscillation.
 #define MC_AVERAGE_FAST(average, current) (0.7 * (average) + 0.3 * (current))
 #define MC_AVERAGE(average, current) (0.8 * (average) + 0.2 * (current))
@@ -102,3 +106,4 @@ if(Datum.is_processing) {\
 	NEW_SS_GLOBAL(SS##X);\
 	PreInit();\
 }\
+/datum/controller/subsystem/movement/##X

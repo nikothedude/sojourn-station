@@ -52,7 +52,7 @@ SUBSYSTEM_DEF(movement)
 	while(processing.len)
 		var/datum/move_loop/loop = processing[processing.len]
 		processing.len--
-		loop.process() //This shouldn't get nulls, if it does, runtime
+		loop.Process() //This shouldn't get nulls, if it does, runtime
 		if(!QDELETED(loop)) //Re-Insert the loop
 			loop.timer = world.time + loop.delay
 			queue_loop(loop)

@@ -73,6 +73,8 @@
 	var/maxHealth = 99999
 	// And a status
 	var/stat = 0
+	///AI controller that controls this atom. type on init, then turned into an instance during runtime
+	var/datum/ai_controller/ai_controller
 
 /atom/proc/update_icon()
 	return
@@ -221,6 +223,8 @@
 
 	spawn()
 		update_openspace()
+
+	QDEL_NULL(ai_controller)
 
 	return ..()
 
@@ -486,7 +490,7 @@ its easier to just keep the beam vertical.
 		var/obj/item/I = P.virtual_scanner
 		I.afterattack(src, user, get_dist(src, user) <= 1)
 
-	SEND_SIGNAL(src, COMSIG_EXAMINE, user, distance)
+	SEND_SIGNAL_LEGACY(src, COMSIG_EXAMINE, user, distance)
 
 	return distance == -1 || (get_dist(src, user) <= distance) || isobserver(user)
 

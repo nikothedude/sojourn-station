@@ -16,7 +16,11 @@ var/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096
 #define SS_PRIORITY_MOB            100	// Mob Life().
 #define SS_PRIORITY_CHAT		   100  // Chat subsystem.
 #define SS_PRIORITY_MACHINERY      100	// Machinery + powernet ticks.
+#define FIRE_PRIORITY_NPC_ACTIONS  87
+#define FIRE_PRIORITY_NPC_MOVEMENT 86
+#define FIRE_PRIORITY_NPC 		   85
 #define SS_PRIORITY_AIR            80	// ZAS processing.
+#define FIRE_PRIORITY_SPACEDRIFT   40   // document this. ARBITRARY VALUE
 #define SS_PRIORITY_ALARM          20	// Alarm processing.
 #define SS_PRIORITY_EVENT          20	// Event processing.
 #define SS_PRIORITY_SHUTTLE        20	// Shuttle movement.

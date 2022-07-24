@@ -4,8 +4,8 @@
 /// Arguments given here are packaged in a list and given to _SendSignal
 #define SEND_SIGNAL(target, sigtype, arguments...) ( !target.comp_lookup?[sigtype] ? NONE : target._SendSignal(sigtype, list(target, ##arguments)) )
 
-/// DO NOT USE. Only for compatability. Remove once all instances are replaced with SEND_SIGNAL.
-#define SEND_SIGNAL_LEGACY
+/// DO NOT USE. Only for compatability. Remove once all instances are replaced with SEND_SIGNAL_LEGACY.
+#define SEND_SIGNAL_LEGACY(target, sigtype, arguments...) ( !target.comp_lookup || !target.comp_lookup[sigtype] ? NONE : target._SendSignal(sigtype, list(##arguments)) )
 #define SEND_GLOBAL_SIGNAL(sigtype, arguments...) ( SEND_SIGNAL(SSdcs, sigtype, ##arguments) )
 
 /// Signifies that this proc is used to handle signals.
@@ -80,6 +80,8 @@
 // /mob signals
 #define COMSIG_MOB_LIFE  "mob_life"							 //from mob/Life()
 #define COMSIG_MOB_LOGIN "mob_login"							//from mob/Login()
+///from base of /mob/Logout(): ()
+#define COMSIG_MOB_LOGOUT "mob_logout"
 #define COMSIG_MOB_DEATH "mob_death"							//from mob/death()
 
 #define COMSIG_TRACE_IMPACT "trace_impact" //Soj edit

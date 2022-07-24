@@ -252,7 +252,7 @@ SUBSYSTEM_DEF(trade)
 		var/invoice_contents_info
 
 		for(var/atom/movable/AM in exported)
-			SEND_SIGNAL(src, COMSIG_TRADE_BEACON, AM)
+			SEND_SIGNAL_LEGACY(src, COMSIG_TRADE_BEACON, AM)
 			invoice_contents_info += "<li>[AM.name]</li>"
 			qdel(AM)
 
@@ -389,7 +389,7 @@ SUBSYSTEM_DEF(trade)
 			if(export_multiplier)
 				invoice_contents_info += "<li>[item.name]</li>"
 				cost += export_value
-				SEND_SIGNAL(src, COMSIG_TRADE_BEACON, item)
+				SEND_SIGNAL_LEGACY(src, COMSIG_TRADE_BEACON, item)
 				qdel(item)
 			else
 				item.forceMove(get_turf(AM))		// Should be the same tile

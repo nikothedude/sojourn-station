@@ -17,6 +17,13 @@
 	var/inertia_dir = 0
 	var/can_anchor = TRUE
 	var/cant_be_pulled = FALSE //Used for things that cant be anchored, but also shouldnt be pullable
+	///0: not doing a diagonal move. 1 and 2: doing the first/second step of the diagonal move
+	var/moving_diagonally = 0
+	///attempt to resume grab after moving instead of before.
+	var/atom/movable/moving_from_pull
+	///Holds information about any movement loops currently running/waiting to run on the movable. Lazy, will be null if nothing's going on
+	var/datum/movement_packet/move_packet
+	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
 
 	/// Used in walk_to_wrapper. Set to world.time whenever a walk is called that uses temporary_walk = TRUE. Prevents walks that dont respect the override from conflicting with eachother.
 	var/walk_to_initial_time = 0
@@ -97,7 +104,7 @@
 			if(is_new_area && is_destination_turf)
 				destination.loc.Entered(src, origin)
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, origin, loc)
+	SEND_SIGNAL_LEGACY(src, COMSIG_MOVABLE_MOVED, origin, loc)
 
 	// Only update plane if we're located on map
 	if(isturf(loc))
@@ -330,7 +337,7 @@
 	// To prevent issues, diagonal movements are broken up into two cardinal movements.
 
 	// Is this a diagonal movement?
-	SEND_SIGNAL(src, COMSIG_MOVABLE_PREMOVE, src)
+	SEND_SIGNAL_LEGACY(src, COMSIG_MOVABLE_PREMOVE, src)
 	if (Dir & (Dir - 1))
 		if (Dir & NORTH)
 			if (Dir & EAST)
@@ -387,7 +394,7 @@
 				onTransitZ(get_z(oldloc, get_z(loc)))
 				update_plane()
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, oldloc, loc)
+		SEND_SIGNAL_LEGACY(src, COMSIG_MOVABLE_MOVED, oldloc, loc)
 
 // Wrapper of step() that also sets glide size to a specific value.
 /proc/step_glide(atom/movable/AM, newdir, glide_size_override)
@@ -396,7 +403,7 @@
 
 //We're changing zlevel
 /atom/movable/proc/onTransitZ(old_z, new_z)//uncomment when something is receiving this signal
-	/*SEND_SIGNAL(src, COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
+	/*SEND_SIGNAL_LEGACY(src, COMSIG_MOVABLE_Z_CHANGED, old_z, new_z)
 	for(var/atom/movable/AM in src) // Notify contents of Z-transition. This can be overridden IF we know the items contents do not care.
 		AM.onTransitZ(old_z,new_z)*/
 

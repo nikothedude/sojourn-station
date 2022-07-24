@@ -311,19 +311,27 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_STOPPABLE)
 		return timer.id
 
-/proc/deltimer(id)
+/**
+ * Delete a timer
+ *
+ * Arguments:
+ * * id a timerid or a /datum/timedevent
+ */
+/proc/deltimer(id, datum/controller/subsystem/timer/timer_subsystem)
 	if (!id)
 		return FALSE
-	if (!istext(id))
-		if (istype(id, /datum/timedevent))
-			qdel(id)
-			return TRUE
-	var/datum/timedevent/timer = SStimer.timer_id_dict["timerid[id]"]
-	if (timer && !timer.spent)
+	if (id == TIMER_ID_NULL)
+		CRASH("Tried to delete a null timerid. Use TIMER_STOPPABLE flag")
+	if (istype(id, /datum/timedevent))
+		qdel(id)
+		return TRUE
+	timer_subsystem = timer_subsystem || SStimer
+	//id is string
+	var/datum/timedevent/timer = timer_subsystem.timer_id_dict[id]
+	if (timer && (!timer.spent || timer.flags & TIMER_DELETE_ME))
 		qdel(timer)
 		return TRUE
 	return FALSE
-
 
 #undef BUCKET_LEN
 #undef BUCKET_POS

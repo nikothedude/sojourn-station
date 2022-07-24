@@ -139,7 +139,7 @@
 
 /obj/item/tool/sword/katana/spatial_cutter/sword_of_lie/Destroy()
 //	for(var/mob/living/carbon/human/H in viewers(get_turf(src)))
-//		SEND_SIGNAL(H, COMSIG_OBJ_FACTION_ITEM_DESTROY, src)
+//		SEND_SIGNAL_LEGACY(H, COMSIG_OBJ_FACTION_ITEM_DESTROY, src)
 //	GLOB.all_faction_items -= src
 //	GLOB.technomancer_faction_item_loss++
 	. = ..()

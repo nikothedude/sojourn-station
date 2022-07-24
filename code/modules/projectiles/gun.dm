@@ -514,7 +514,7 @@ For the sake of consistency, I suggest always rounding up on even values when ap
 
 //called after successfully firing
 /obj/item/gun/proc/handle_post_fire(mob/living/user, atom/target, pointblank=0, reflex=0, obj/item/projectile/P)
-	SEND_SIGNAL(src, COMSIG_GUN_POST_FIRE, target, pointblank, reflex)
+	SEND_SIGNAL_LEGACY(src, COMSIG_GUN_POST_FIRE, target, pointblank, reflex)
 	//The sound we play
 	if(silenced)
 		//Silenced shots have a lower range and volume
@@ -1083,8 +1083,8 @@ For the sake of consistency, I suggest always rounding up on even values when ap
 
 
 	//Now lets have each upgrade reapply its modifications
-	SEND_SIGNAL(src, COMSIG_ADDVAL, src)
-	SEND_SIGNAL(src, COMSIG_APPVAL, src)
+	SEND_SIGNAL_LEGACY(src, COMSIG_ADDVAL, src)
+	SEND_SIGNAL_LEGACY(src, COMSIG_APPVAL, src)
 
 	if(firemodes.len)
 		very_unsafe_set_firemode(sel_mode) // Reset the firemode so it gets the new changes

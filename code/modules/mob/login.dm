@@ -62,4 +62,4 @@
 			client.create_UI(src.type)
 		client.CAN_MOVE_DIAGONALLY = FALSE
 
-	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
+	SEND_SIGNAL_LEGACY(src, COMSIG_MOB_LOGIN)

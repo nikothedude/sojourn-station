@@ -96,7 +96,7 @@
 	//Now requeue us with our new target start time
 	controller.queue_loop(src)
 
-/datum/move_loop/process()
+/datum/move_loop/Process()
 	var/old_delay = delay //The signal can sometimes change delay
 
 	if(SEND_SIGNAL(src, COMSIG_MOVELOOP_PREPROCESS_CHECK) & MOVELOOP_SKIP_STEP) //Chance for the object to react
