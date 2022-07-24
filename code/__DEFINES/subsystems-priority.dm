@@ -24,6 +24,7 @@ var/list/bitflags = list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096
 #define SS_PRIORITY_ALARM          20	// Alarm processing.
 #define SS_PRIORITY_EVENT          20	// Event processing.
 #define SS_PRIORITY_SHUTTLE        20	// Shuttle movement.
+#define FIRE_PRIORITY_DEFAULT      50   //default
 #define SS_PRIORITY_CIRCUIT_COMP   20	// Processing circuit component do_work.
 #define SS_PRIORITY_AIRFLOW        15	// Object movement from ZAS airflow.
 #define SS_PRIORITY_INACTIVITY     10	// Idle kicking.

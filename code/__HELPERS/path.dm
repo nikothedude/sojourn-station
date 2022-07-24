@@ -418,9 +418,9 @@
 		if(!iter_rail.CanAStarPass(ID, actual_dir, no_id = no_id))
 			return TRUE
 
-	for(var/obj/machinery/door/firedoor/border_only/firedoor in src)
+/*	for(var/obj/machinery/door/firedoor/border_only/firedoor in src) niko come back and look at this
 		if(!firedoor.CanAStarPass(ID, actual_dir, no_id = no_id))
-			return TRUE
+			return TRUE */
 
 	// Destination blockers check
 	var/reverse_dir = get_dir(destination_turf, src)

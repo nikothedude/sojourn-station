@@ -291,7 +291,7 @@ GLOBAL_DATUM_INIT(iconCache, /savefile, new("tmp/iconCache.sav")) //Cache of ico
 	if(!html && !text)
 		CRASH("Empty or null string in to_chat proc call.")
 	if(target == world)
-		target = GLOB.clients
+		target = clients
 
 	// Build a message
 	var/message = list()
