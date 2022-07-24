@@ -43,11 +43,3 @@
 	speak = list("moo?","moo","MOOOOOO")
 	emote_hear = list("brays.")
 	emote_see = list("shakes her head.")
-
-///unlike normal cows, wisdom cows speak of wisdom and won't shut the fuck up
-/datum/ai_planning_subtree/random_speech/cow/wisdom
-	speech_chance = 15
-
-/datum/ai_planning_subtree/random_speech/cow/wisdom/New()
-	. = ..()
-	speak = GLOB.wisdoms //Done here so it's setup properly

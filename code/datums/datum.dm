@@ -34,6 +34,9 @@
 	/// Lazy associated list in the structure of `signals:proctype` that are run when the datum receives that signal
 	var/list/list/datum/callback/signal_procs
 
+	/// Datum level flags
+	var/datum_flags = NONE
+
 	var/signal_enabled = FALSE
 
 	/// A weak reference to another datum

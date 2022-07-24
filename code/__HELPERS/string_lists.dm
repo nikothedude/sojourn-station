@@ -23,9 +23,3 @@ GLOBAL_LIST_EMPTY(string_lists)
 		baseturf_holder.ChangeTurf(/turf/closed/indestructible/baseturfs_ded, list(/turf/closed/indestructible/baseturfs_ded), flags = CHANGETURF_FORCEOP)
 		return string_list(list(/turf/closed/indestructible/baseturfs_ded)) //I want this reported god damn it
 	return string_list(values)*/
-
-/turf/closed/indestructible/baseturfs_ded
-	name = "Report this"
-	desc = "It looks like base turfs went to the fucking moon, TELL YOUR LOCAL CODER TODAY"
-	icon = 'icons/turf/debug.dmi'
-	icon_state = "fucked_baseturfs"

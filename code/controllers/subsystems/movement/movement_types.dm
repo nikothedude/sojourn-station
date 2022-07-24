@@ -785,7 +785,7 @@
  * flags - Set of bitflags that effect move loop behavior in some way. Check _DEFINES/movement.dm
  *
 **/
-/datum/controller/subsystem/move_manager/proc/move_disposals(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
+/*/datum/controller/subsystem/move_manager/proc/move_disposals(moving, delay, timeout, subsystem, priority, flags, datum/extra_info)
 	return add_to_loop(moving, subsystem, /datum/move_loop/disposal_holder, priority, flags, extra_info, delay, timeout)
 
 /// Disposal holders need to move through a chain of pipes
@@ -808,4 +808,4 @@
 		return FALSE
 	var/atom/old_loc = moving.loc
 	holder.current_pipe = holder.current_pipe.transfer(holder)
-	return old_loc != moving?.loc
+	return old_loc != moving?.loc */

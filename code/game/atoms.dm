@@ -193,7 +193,19 @@
 			if (!(chosen_modifier.valid_check(src, arguments)))
 				QDEL_NULL(chosen_modifier)
 
+	InitializeAIController()
+
 	return INITIALIZE_HINT_NORMAL
+
+/**
+* Instantiates the AI controller of this atom. Override this if you want to assign variables first.
+*
+* This will work fine without manually passing arguments.
+*/
+
+/atom/proc/InitializeAIController()
+	if(ispath(ai_controller))
+		ai_controller = new ai_controller(src)
 
 /**
  * Late Intialization, for code that should run after all atoms have run Intialization

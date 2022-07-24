@@ -629,7 +629,7 @@ proc/is_blind(A)
 				return
 			return mob.mind.initial_email_login["login"]
 
-/proc/get_both_hands(mob/living/carbon/M)
+/proc/get_both_hands(mob/M)
 	if(!istype(M))
 		return
 	var/list/hands = list(M.l_hand, M.r_hand)

@@ -99,7 +99,7 @@
 	if(blackboard[BB_HOSTILE_FRIEND] == WEAKREF(user))
 		var/mob/living/living_pawn = pawn
 		if(!IS_DEAD_OR_INCAP(living_pawn))
-			examine_text += span_notice("[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!")
+			examine_text += span_notice("They seem happy to see you!")
 
 // next section is regarding commands
 
@@ -171,12 +171,12 @@
 	switch(command)
 		// heel: stop what you're doing, relax and try not to do anything for a little bit
 		if(COMMAND_STOP)
-			pawn.visible_message(span_notice("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and [pawn.p_they()] stop[pawn.p_s()] obediently, awaiting further orders."))
+			pawn.visible_message(span_notice("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and they stop obediently, awaiting further orders."))
 			blackboard[BB_HOSTILE_ORDER_MODE] = HOSTILE_COMMAND_NONE
 			CancelActions()
 		// follow: whatever the commander points to, try and bring it back
 		if(COMMAND_FOLLOW)
-			pawn.visible_message(span_notice("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and [pawn.p_they()] follow[pawn.p_s()] slightly in anticipation."))
+			pawn.visible_message(span_notice("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and they follow slightly in anticipation."))
 			CancelActions()
 			blackboard[BB_HOSTILE_ORDER_MODE] = HOSTILE_COMMAND_FOLLOW
 			blackboard[BB_FOLLOW_TARGET] = WEAKREF(commander)
@@ -187,7 +187,7 @@
 			queue_behavior(/datum/ai_behavior/follow)
 		// attack: harass whoever the commander points to
 		if(COMMAND_ATTACK)
-			pawn.visible_message(span_danger("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and [pawn.p_they()] growl[pawn.p_s()] intensely.")) // imagine getting intimidated by a corgi
+			pawn.visible_message(span_danger("[pawn] [blackboard[BB_HOSTILE_ATTACK_WORD]] at [commander]'s command, and they growl intensely.")) // imagine getting intimidated by a corgi
 			CancelActions()
 			blackboard[BB_HOSTILE_ORDER_MODE] = HOSTILE_COMMAND_ATTACK
 
