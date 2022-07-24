@@ -2,7 +2,7 @@
 	movement_delay = 0.4 SECONDS
 
 /datum/ai_controller/basic_controller/TryPossessPawn(atom/new_pawn)
-	if(!isbasicmob(new_pawn))
+	if(!issimple(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
 	var/mob/living/basic/basic_mob = new_pawn
 
