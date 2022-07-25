@@ -1,6 +1,7 @@
 SUBSYSTEM_DEF(movement)
 	name = "Movement Loops"
 	flags = SS_NO_INIT|SS_BACKGROUND|SS_TICKER
+	priority = SS_PRIORITY_MOVEMENT
 	wait = 1 //Fire each tick
 	/*
 		A breif aside about the bucketing system here

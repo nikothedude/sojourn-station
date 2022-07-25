@@ -97,7 +97,7 @@
 	handle_breakdowns()
 	handle_Insight()
 	handle_level()
-	SEND_SIGNAL(owner, COMSIG_HUMAN_SANITY, level)
+	SEND_SIGNAL_LEGACY(owner, COMSIG_HUMAN_SANITY, level)
 
 /datum/sanity/proc/give_insight(value)
 	var/new_value = value
@@ -275,9 +275,9 @@
 		if(I.perk)
 			owner.stats.addPerk(I.perk)
 		for(var/mob/living/carbon/human/H in viewers(owner))
-			SEND_SIGNAL(H, COMSIG_HUMAN_ODDITY_LEVEL_UP, owner, O)
+			SEND_SIGNAL_LEGACY(H, COMSIG_HUMAN_ODDITY_LEVEL_UP, owner, O)
 		for(var/mob/living/carbon/human/H in viewers(owner))
-			SEND_SIGNAL(H, COMSIG_HUMAN_LEVEL_UP, owner, O)
+			SEND_SIGNAL_LEGACY(H, COMSIG_HUMAN_LEVEL_UP, owner, O)
 
 /datum/sanity/proc/onDamage(amount)
 	changeLevel(-SANITY_DAMAGE_HURT(amount, owner.stats.getStat(STAT_VIG)))

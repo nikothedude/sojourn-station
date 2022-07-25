@@ -189,5 +189,5 @@
 	A?.sanctify()
 
 /area/proc/sanctify()
-	SEND_SIGNAL(src, COMSIG_AREA_SANCTIFY)
+	SEND_SIGNAL_LEGACY(src, COMSIG_AREA_SANCTIFY)
 	return
