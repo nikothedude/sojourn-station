@@ -16,28 +16,28 @@
 
 	COOLDOWN_DECLARE(command_cooldown)
 
-/datum/ai_controller/hostile_friend/process(delta_time)
+/datum/ai_controller/hostile_friend/Process(delta_time)
 	if(isliving(pawn))
 		var/mob/living/living_pawn = pawn
-		movement_delay = living_pawn.cached_multiplicative_slowdown
+		movement_delay = living_pawn.move_to_delay //niko todo replace move_to_delay maybe
 	return ..()
 
 /datum/ai_controller/hostile_friend/TryPossessPawn(atom/new_pawn)
-	if(!ishostile(new_pawn))
+	if(!isliving(new_pawn)) //niko todo replace
 		return AI_CONTROLLER_INCOMPATIBLE
 
-	RegisterSignal(new_pawn, COMSIG_PARENT_EXAMINE, .proc/on_examined)
+//	RegisterSignal(new_pawn, COMSIG_PARENT_EXAMINE, .proc/on_examined)
 	RegisterSignal(new_pawn, COMSIG_CLICK_ALT, .proc/check_altclicked)
-	RegisterSignal(new_pawn, COMSIG_RIDDEN_DRIVER_MOVE, .proc/on_ridden_driver_move)
-	RegisterSignal(new_pawn, COMSIG_MOVABLE_PREBUCKLE, .proc/on_prebuckle)
+//	RegisterSignal(new_pawn, COMSIG_RIDDEN_DRIVER_MOVE, .proc/on_ridden_driver_move)
+//	RegisterSignal(new_pawn, COMSIG_MOVABLE_PREBUCKLE, .proc/on_prebuckle)
 	return ..() //Run parent at end
 
 /datum/ai_controller/hostile_friend/UnpossessPawn(destroy)
 	UnregisterSignal(pawn, list(
-		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_PARENT_EXAMINE,
+	//	COMSIG_ATOM_ATTACK_HAND,
+	//	COMSIG_PARENT_EXAMINE,
 		COMSIG_CLICK_ALT,
-		COMSIG_LIVING_DEATH,
+	//	COMSIG_LIVING_DEATH,
 		COMSIG_PARENT_QDELETING
 	))
 	unfriend()
@@ -47,8 +47,8 @@
 	SIGNAL_HANDLER
 	if(force || ai_status == AI_STATUS_OFF)
 		return
-	if(WEAKREF(buckler) != blackboard[BB_HOSTILE_FRIEND])
-		return COMPONENT_BLOCK_BUCKLE
+	//if(WEAKREF(buckler) != blackboard[BB_HOSTILE_FRIEND])
+	//	return COMPONENT_BLOCK_BUCKLE
 
 /datum/ai_controller/hostile_friend/able_to_run()
 	var/mob/living/living_pawn = pawn
@@ -62,7 +62,7 @@
 	if(!istype(simple_pawn))
 		return
 
-	return simple_pawn.access_card
+	return TRUE // niko TODO rreplace return with smthn better
 
 /datum/ai_controller/hostile_friend/proc/on_ridden_driver_move(atom/movable/movable_parent, mob/living/user, direction)
 	SIGNAL_HANDLER
@@ -81,15 +81,15 @@
 	if(in_range(pawn, new_friend))
 		new_friend.visible_message("<b>[pawn]</b> looks at [new_friend] in a friendly manner!", span_notice("[pawn] looks at you in a friendly manner!"))
 	blackboard[BB_HOSTILE_FRIEND] = friend_ref
-	RegisterSignal(new_friend, COMSIG_MOB_POINTED, .proc/check_point)
-	RegisterSignal(new_friend, COMSIG_MOB_SAY, .proc/check_verbal_command)
+	//RegisterSignal(new_friend, COMSIG_MOB_POINTED, .proc/check_point)
+	//RegisterSignal(new_friend, COMSIG_MOB_SAY, .proc/check_verbal_command)
 
 /// Someone is being mean to us, take them off our friends (add actual enemies behavior later)
 /datum/ai_controller/hostile_friend/proc/unfriend()
 	var/datum/weakref/friend_ref = blackboard[BB_HOSTILE_FRIEND]
 	var/mob/living/old_friend = friend_ref?.resolve()
-	if(old_friend)
-		UnregisterSignal(old_friend, list(COMSIG_MOB_POINTED, COMSIG_MOB_SAY))
+	//if(old_friend)
+	//	UnregisterSignal(old_friend, list(COMSIG_MOB_POINTED, COMSIG_MOB_SAY))
 	blackboard[BB_HOSTILE_FRIEND] = null
 
 /// Someone is looking at us, if we're currently carrying something then show what it is, and include a message if they're our friend
@@ -111,22 +111,12 @@
 		return
 	if(!istype(clicker) || blackboard[BB_HOSTILE_FRIEND] == WEAKREF(clicker))
 		return
-	. = COMPONENT_CANCEL_CLICK_ALT
+//	. = COMPONENT_CANCEL_CLICK_ALT
 	INVOKE_ASYNC(src, .proc/command_radial, clicker)
 
 /// Show the command radial menu
 /datum/ai_controller/hostile_friend/proc/command_radial(mob/living/clicker)
-	var/list/commands = list(
-		COMMAND_STOP = image(icon = 'icons/testing/turf_analysis.dmi', icon_state = "red_arrow"),
-		COMMAND_FOLLOW = image(icon = 'icons/mob/actions/actions_spells.dmi', icon_state = "summons"),
-		COMMAND_ATTACK = image(icon = 'icons/effects/effects.dmi', icon_state = "bite"),
-		)
-
-	var/choice = show_radial_menu(clicker, pawn, commands, custom_check = CALLBACK(src, .proc/check_menu, clicker), tooltips = TRUE)
-	if(!choice || !check_menu(clicker))
-		return
-	set_command_mode(clicker, choice)
-
+	return FALSE
 
 /datum/ai_controller/hostile_friend/proc/check_menu(mob/user)
 	if(!istype(user))
