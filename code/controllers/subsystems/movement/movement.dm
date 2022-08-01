@@ -27,6 +27,9 @@ SUBSYSTEM_DEF(movement)
 	msg = "B:[length(sorted_buckets)] E:[total_len]"
 	return ..()
 
+/proc/return_typenames(type)
+	return splittext("[type]", "/") // i do not care enough to put this anywhere else ~niko
+
 /datum/controller/subsystem/movement/Recover()
 	//Get ready this is gonna be horrible
 	//We need to do this to support subtypes by the by
